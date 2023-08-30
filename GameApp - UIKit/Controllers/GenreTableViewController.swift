@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol GenreTableViewDelegate: AnyObject {
+    func modalDismiss()
+}
+
 class GenreTableViewController: UITableViewController {
     var genreResponse: GenreResponse = GenreResponse(count: 0, next: nil, previous: nil, results: [])
     var selectedGenres: String = UserDefaults().string(forKey: "selectedGenres") ?? ""
+    
+    weak var genreTableViewDelegate: GenreTableViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,10 +85,10 @@ class GenreTableViewController: UITableViewController {
         else {
             var selectedGenresArray = selectedGenres.split(separator: ",")
             selectedGenresArray.removeAll(where: { $0 == "\(mySwitch.tag)" })
-            
+
             let selectedGenresString = selectedGenresArray.joined(separator: ",")
             
-            UserDefaults().setValue(selectedGenresString, forKey: "selectedGenres")
+            selectedGenres = selectedGenresString
             if UserDefaults().string(forKey: "selectedGenres") == nil && selectedGenres == "" {
                 navigationItem.rightBarButtonItem?.isEnabled = false
             }
@@ -90,9 +96,11 @@ class GenreTableViewController: UITableViewController {
     }
     
     @objc func submitGenres() {
-        if selectedGenres != "" {
+        if selectedGenres != "" && selectedGenres != UserDefaults().string(forKey: "selectedGenres") {
             UserDefaults().setValue(selectedGenres, forKey: "selectedGenres")
+            print(genreTableViewDelegate)
+            genreTableViewDelegate?.modalDismiss()
         }
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
 }

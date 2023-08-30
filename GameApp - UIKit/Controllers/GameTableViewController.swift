@@ -59,11 +59,18 @@ class GameTableViewController: UITableViewController {
     @objc func showGenreSelectionModal() {
         let genreTableViewController: GenreTableViewController = GenreTableViewController()
         genreTableViewController.isModalInPresentation = true
+        genreTableViewController.genreTableViewDelegate = self
         
         let modalNavigationController = UINavigationController()
         modalNavigationController.pushViewController(genreTableViewController, animated: true)
         
         navigationController?.modalPresentationStyle = .pageSheet
         navigationController?.present(modalNavigationController, animated: true)
+    }
+}
+
+extension GameTableViewController: GenreTableViewDelegate {
+    func modalDismiss() {
+        getGamesFromAPI()
     }
 }
