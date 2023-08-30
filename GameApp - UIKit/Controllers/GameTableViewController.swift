@@ -14,7 +14,10 @@ class GameTableViewController: UITableViewController {
         title = "Games"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Settings", style: .done, target: self, action: #selector(showGenreSelectionModal))
         
-        
+        guard let selectedGenres = UserDefaults().string(forKey: "selectedGenres") else {
+            showGenreSelectionModal()
+            return
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -22,6 +25,9 @@ class GameTableViewController: UITableViewController {
     }
     
     @objc func showGenreSelectionModal() {
+        let gameTableViewController = GameTableViewController()
         
+        navigationController?.modalPresentationStyle = .pageSheet
+        navigationController?.present(gameTableViewController, animated: true)
     }
 }
