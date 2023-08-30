@@ -12,7 +12,12 @@ class GenreTableViewController: UITableViewController {
         super.viewDidLoad()
         
         title = "Genres"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .plain, target: self, action: #selector(submitGenres))
+        guard let _ = UserDefaults().string(forKey: "selectedGenres") else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .plain, target: self, action: #selector(submitGenres))
+            navigationItem.rightBarButtonItem?.isEnabled = false
+            return
+        }
+        
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

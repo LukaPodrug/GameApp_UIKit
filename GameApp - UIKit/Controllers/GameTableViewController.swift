@@ -15,7 +15,7 @@ class GameTableViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Settings", style: .done, target: self, action: #selector(showGenreSelectionModal))
         
         guard let _ = UserDefaults().string(forKey: "selectedGenres") else {
-            showGenreSelectionModal()
+            showGenreSelectionModal(initialGenreSelection: true)
             return
         }
     }
@@ -24,14 +24,16 @@ class GameTableViewController: UITableViewController {
         return 0
     }
     
-    @objc func showGenreSelectionModal() {
-        navigationController?.modalPresentationStyle = .pageSheet
-        
+    @objc func showGenreSelectionModal(initialGenreSelection: Bool = false) {
         let genreTableViewController = GenreTableViewController()
+        if initialGenreSelection == true {
+            genreTableViewController.isModalInPresentation = true
+        }
         
         let modalNavigationController = UINavigationController()
         modalNavigationController.pushViewController(genreTableViewController, animated: true)
         
+        navigationController?.modalPresentationStyle = .pageSheet
         navigationController?.present(modalNavigationController, animated: true)
     }
 }
