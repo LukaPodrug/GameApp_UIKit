@@ -20,6 +20,8 @@
 		D105CD652A9F817B00BAEBF1 /* GenreTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D105CD642A9F817B00BAEBF1 /* GenreTableCellView.xib */; };
 		D105CD672A9F822E00BAEBF1 /* GenreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD662A9F822E00BAEBF1 /* GenreTableViewCell.swift */; };
 		D105CD6A2A9F8FFF00BAEBF1 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD692A9F8FFF00BAEBF1 /* APIManager.swift */; };
+		D105CD6C2A9FAB1F00BAEBF1 /* GameTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D105CD6B2A9FAB1F00BAEBF1 /* GameTableCellView.xib */; };
+		D105CD6E2A9FAB8A00BAEBF1 /* GameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD6D2A9FAB8A00BAEBF1 /* GameTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		D105CD642A9F817B00BAEBF1 /* GenreTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreTableCellView.xib; sourceTree = "<group>"; };
 		D105CD662A9F822E00BAEBF1 /* GenreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewCell.swift; sourceTree = "<group>"; };
 		D105CD692A9F8FFF00BAEBF1 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		D105CD6B2A9FAB1F00BAEBF1 /* GameTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameTableCellView.xib; sourceTree = "<group>"; };
+		D105CD6D2A9FAB8A00BAEBF1 /* GameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				D105CD5C2A9F746200BAEBF1 /* GameTableView.xib */,
+				D105CD6B2A9FAB1F00BAEBF1 /* GameTableCellView.xib */,
 				D105CD602A9F778300BAEBF1 /* GenreTableView.xib */,
 				D105CD642A9F817B00BAEBF1 /* GenreTableCellView.xib */,
 			);
@@ -114,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				D105CD5E2A9F748800BAEBF1 /* GameTableViewController.swift */,
+				D105CD6D2A9FAB8A00BAEBF1 /* GameTableViewCell.swift */,
 				D105CD622A9F779100BAEBF1 /* GenreTableViewController.swift */,
 				D105CD662A9F822E00BAEBF1 /* GenreTableViewCell.swift */,
 			);
@@ -191,6 +197,7 @@
 				D105CD5D2A9F746200BAEBF1 /* GameTableView.xib in Resources */,
 				D105CD482A9F62A900BAEBF1 /* Assets.xcassets in Resources */,
 				D105CD612A9F778300BAEBF1 /* GenreTableView.xib in Resources */,
+				D105CD6C2A9FAB1F00BAEBF1 /* GameTableCellView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +210,7 @@
 			files = (
 				D105CD6A2A9F8FFF00BAEBF1 /* APIManager.swift in Sources */,
 				D105CD5F2A9F748800BAEBF1 /* GameTableViewController.swift in Sources */,
+				D105CD6E2A9FAB8A00BAEBF1 /* GameTableViewCell.swift in Sources */,
 				D105CD572A9F6FEF00BAEBF1 /* GenreModel.swift in Sources */,
 				D105CD592A9F712900BAEBF1 /* GameModel.swift in Sources */,
 				D105CD632A9F779100BAEBF1 /* GenreTableViewController.swift in Sources */,
