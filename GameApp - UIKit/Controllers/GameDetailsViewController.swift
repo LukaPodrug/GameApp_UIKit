@@ -51,7 +51,6 @@ class GameDetailsViewController: UIViewController, UICollectionViewDataSource, U
         let cell = galleryCollection.dequeueReusableCell(withReuseIdentifier: "GalleryCell", for: indexPath) as! GameDetailsCollectionViewCell
         cell.gameScreenshot.loadImageFromURL(URL: URL(string: game.shortScreenshots[indexPath.row].image)!)
         cell.gameScreenshot.contentMode = .scaleAspectFill
-        cell.backgroundColor = .blue
         
         return cell
     }

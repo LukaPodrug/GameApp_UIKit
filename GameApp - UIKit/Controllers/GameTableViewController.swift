@@ -9,11 +9,13 @@ import UIKit
 
 class GameTableViewController: UITableViewController {
     var gameResponse: GameResponse = GameResponse(count: 0, next: nil, previous: nil, results: [])
+    var games: [Game] = []
+    var gamePage: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getGamesFromAPI()
+        getGamesFromAPI(page: gamePage)
         
         title = "Games"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Settings", style: .done, target: self, action: #selector(showGenreSelectionModal))
@@ -26,13 +28,13 @@ class GameTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gameResponse.results.count
+        return games.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath) as! GameTableViewCell
         
-        let game = gameResponse.results[indexPath.row]
+        let game = games[indexPath.row]
         
         cell.gameLabel.text = game.name
         
@@ -40,21 +42,39 @@ class GameTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let game = gameResponse.results[indexPath.row]
+        let game = games[indexPath.row]
         
         showGameDetailsModal(game: game)
     }
     
-    func getGamesFromAPI() {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row >= games.count - 1 && gameResponse.next != nil {
+            getGamesFromAPI(page: gamePage)
+        }
+    }
+    
+    func getGamesFromAPI(page: Int) {
         guard let selectedGenres = UserDefaults().string(forKey: "selectedGenres") else {
             return
         }
-        APIManager.shared.getGames(genres: selectedGenres) { result in
+        APIManager.shared.getGames(genres: selectedGenres, page: page) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let gameResponse):
                     self.gameResponse = gameResponse
-                    self.tableView.animatedReload()
+                    if self.gamePage == 1 {
+                        self.games = gameResponse.results
+                        self.tableView.animatedReload()
+                    }
+                    else {
+                        var indexPaths: [IndexPath] = []
+                        for i in self.games.count ..< self.games.count + gameResponse.results.count {
+                            indexPaths.append(IndexPath(row: i, section: 0))
+                        }
+                        self.games.append(contentsOf: gameResponse.results)
+                        self.tableView.insertRows(at: indexPaths, with: .automatic)
+                    }
+                    self.gamePage = self.gamePage + 1
                 case .failure:
                     print("Error with getting games from API")
                 }
@@ -84,6 +104,7 @@ class GameTableViewController: UITableViewController {
 
 extension GameTableViewController: GenreTableViewDelegate {
     func modalDismiss() {
-        getGamesFromAPI()
+        gamePage = 1
+        getGamesFromAPI(page: gamePage)
     }
 }

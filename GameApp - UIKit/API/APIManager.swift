@@ -43,9 +43,10 @@ class APIManager {
         task.resume()
     }
     
-    func getGames(genres: String, completion: @escaping (Result<GameResponse, ErrorType>) -> Void) {
+    func getGames(genres: String, page: Int, completion: @escaping (Result<GameResponse, ErrorType>) -> Void) {
         let genresQueryItem = URLQueryItem(name: "genres", value: genres)
-        let URL = buildURL(endpoint: "/games", queryItems: [genresQueryItem])
+        let pageQueryItem = URLQueryItem(name: "page", value: "\(page)")
+        let URL = buildURL(endpoint: "/games", queryItems: [genresQueryItem, pageQueryItem])
         
         let task = URLSession.shared.dataTask(with: URL) { data, response, error in
             guard let data else {
