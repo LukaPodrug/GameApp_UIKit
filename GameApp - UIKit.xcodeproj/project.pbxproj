@@ -17,6 +17,8 @@
 		D105CD5F2A9F748800BAEBF1 /* GameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD5E2A9F748800BAEBF1 /* GameTableViewController.swift */; };
 		D105CD612A9F778300BAEBF1 /* GenreTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D105CD602A9F778300BAEBF1 /* GenreTableView.xib */; };
 		D105CD632A9F779100BAEBF1 /* GenreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD622A9F779100BAEBF1 /* GenreTableViewController.swift */; };
+		D105CD652A9F817B00BAEBF1 /* GenreTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D105CD642A9F817B00BAEBF1 /* GenreTableCellView.xib */; };
+		D105CD672A9F822E00BAEBF1 /* GenreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD662A9F822E00BAEBF1 /* GenreTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		D105CD5E2A9F748800BAEBF1 /* GameTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewController.swift; sourceTree = "<group>"; };
 		D105CD602A9F778300BAEBF1 /* GenreTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreTableView.xib; sourceTree = "<group>"; };
 		D105CD622A9F779100BAEBF1 /* GenreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewController.swift; sourceTree = "<group>"; };
+		D105CD642A9F817B00BAEBF1 /* GenreTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreTableCellView.xib; sourceTree = "<group>"; };
+		D105CD662A9F822E00BAEBF1 /* GenreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,7 @@
 			children = (
 				D105CD5C2A9F746200BAEBF1 /* GameTableView.xib */,
 				D105CD602A9F778300BAEBF1 /* GenreTableView.xib */,
+				D105CD642A9F817B00BAEBF1 /* GenreTableCellView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -107,6 +112,7 @@
 			children = (
 				D105CD5E2A9F748800BAEBF1 /* GameTableViewController.swift */,
 				D105CD622A9F779100BAEBF1 /* GenreTableViewController.swift */,
+				D105CD662A9F822E00BAEBF1 /* GenreTableViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -170,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D105CD4B2A9F62A900BAEBF1 /* LaunchScreen.storyboard in Resources */,
+				D105CD652A9F817B00BAEBF1 /* GenreTableCellView.xib in Resources */,
 				D105CD5D2A9F746200BAEBF1 /* GameTableView.xib in Resources */,
 				D105CD482A9F62A900BAEBF1 /* Assets.xcassets in Resources */,
 				D105CD612A9F778300BAEBF1 /* GenreTableView.xib in Resources */,
@@ -188,6 +195,7 @@
 				D105CD592A9F712900BAEBF1 /* GameModel.swift in Sources */,
 				D105CD632A9F779100BAEBF1 /* GenreTableViewController.swift in Sources */,
 				D105CD3F2A9F62A900BAEBF1 /* AppDelegate.swift in Sources */,
+				D105CD672A9F822E00BAEBF1 /* GenreTableViewCell.swift in Sources */,
 				D105CD412A9F62A900BAEBF1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
