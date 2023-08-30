@@ -8,20 +8,52 @@
 import UIKit
 
 class GameTableViewController: UITableViewController {
+    var gameResponse: GameResponse = GameResponse(count: 0, next: nil, previous: nil, results: [])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getGamesFromAPI()
         
         title = "Games"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Settings", style: .done, target: self, action: #selector(showGenreSelectionModal))
         
+        tableView.register(UINib(nibName: "GameTableCellView", bundle: nil), forCellReuseIdentifier: "GameCell")
+        
         if UserDefaults().string(forKey: "selectedGenres") == nil {
             showGenreSelectionModal()
-            return
         }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return gameResponse.results.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath) as! GameTableViewCell
+        
+        let game = gameResponse.results[indexPath.row]
+        
+        cell.gameLabel.text = game.name
+        
+        return cell
+    }
+    
+    func getGamesFromAPI() {
+        guard let selectedGenres = UserDefaults().string(forKey: "selectedGenres") else {
+            return
+        }
+        APIManager.shared.getGames(genres: selectedGenres) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let gameResponse):
+                    self.gameResponse = gameResponse
+                    self.tableView.reloadData()
+                case .failure:
+                    print("Error with getting games from API")
+                }
+            }
+        }
     }
     
     @objc func showGenreSelectionModal() {

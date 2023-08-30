@@ -42,6 +42,28 @@ class APIManager {
         
         task.resume()
     }
+    
+    func getGames(genres: String, completion: @escaping (Result<GameResponse, ErrorType>) -> Void) {
+        let genresQueryItem = URLQueryItem(name: "genres", value: genres)
+        let URL = buildURL(endpoint: "/games", queryItems: [genresQueryItem])
+        
+        let task = URLSession.shared.dataTask(with: URL) { data, response, error in
+            guard let data else {
+                completion(.failure(.network))
+                return
+            }
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            
+            if let decodedResponse = try? decoder.decode(GameResponse.self, from: data) {
+                completion(.success(decodedResponse))
+            } else {
+                completion(.failure(.decoding))
+            }
+        }
+        
+        task.resume()
+    }
 }
 
 enum ErrorType: Error {
