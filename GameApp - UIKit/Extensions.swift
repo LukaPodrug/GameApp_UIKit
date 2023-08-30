@@ -20,3 +20,9 @@ extension UIImageView {
             }
     }
 }
+
+extension UITableView {
+    func animatedReload() {
+        UIView.transition(with: self, duration: 0.2, options: .transitionCrossDissolve, animations: { self.reloadData() }, completion: nil)
+    }
+}

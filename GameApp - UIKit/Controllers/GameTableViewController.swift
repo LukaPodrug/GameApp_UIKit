@@ -54,7 +54,7 @@ class GameTableViewController: UITableViewController {
                 switch result {
                 case .success(let gameResponse):
                     self.gameResponse = gameResponse
-                    self.tableView.reloadData()
+                    self.tableView.animatedReload()
                 case .failure:
                     print("Error with getting games from API")
                 }

@@ -76,7 +76,7 @@
                     <rect key="frame" x="0.0" y="496" width="393" height="304"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="0.0" id="fpm-e9-vhG">
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="0.0" id="fpm-e9-vhG">
                         <size key="itemSize" width="130" height="130"/>
                         <size key="estimatedItemSize" width="150" height="100"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
