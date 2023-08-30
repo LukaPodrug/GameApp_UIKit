@@ -15,6 +15,8 @@
 		D105CD592A9F712900BAEBF1 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD582A9F712900BAEBF1 /* GameModel.swift */; };
 		D105CD5D2A9F746200BAEBF1 /* GameTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D105CD5C2A9F746200BAEBF1 /* GameTableView.xib */; };
 		D105CD5F2A9F748800BAEBF1 /* GameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD5E2A9F748800BAEBF1 /* GameTableViewController.swift */; };
+		D105CD612A9F778300BAEBF1 /* GenreTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D105CD602A9F778300BAEBF1 /* GenreTableView.xib */; };
+		D105CD632A9F779100BAEBF1 /* GenreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD622A9F779100BAEBF1 /* GenreTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		D105CD582A9F712900BAEBF1 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		D105CD5C2A9F746200BAEBF1 /* GameTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameTableView.xib; sourceTree = "<group>"; };
 		D105CD5E2A9F748800BAEBF1 /* GameTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewController.swift; sourceTree = "<group>"; };
+		D105CD602A9F778300BAEBF1 /* GenreTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreTableView.xib; sourceTree = "<group>"; };
+		D105CD622A9F779100BAEBF1 /* GenreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				D105CD5C2A9F746200BAEBF1 /* GameTableView.xib */,
+				D105CD602A9F778300BAEBF1 /* GenreTableView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -101,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				D105CD5E2A9F748800BAEBF1 /* GameTableViewController.swift */,
+				D105CD622A9F779100BAEBF1 /* GenreTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -166,6 +172,7 @@
 				D105CD4B2A9F62A900BAEBF1 /* LaunchScreen.storyboard in Resources */,
 				D105CD5D2A9F746200BAEBF1 /* GameTableView.xib in Resources */,
 				D105CD482A9F62A900BAEBF1 /* Assets.xcassets in Resources */,
+				D105CD612A9F778300BAEBF1 /* GenreTableView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +186,7 @@
 				D105CD5F2A9F748800BAEBF1 /* GameTableViewController.swift in Sources */,
 				D105CD572A9F6FEF00BAEBF1 /* GenreModel.swift in Sources */,
 				D105CD592A9F712900BAEBF1 /* GameModel.swift in Sources */,
+				D105CD632A9F779100BAEBF1 /* GenreTableViewController.swift in Sources */,
 				D105CD3F2A9F62A900BAEBF1 /* AppDelegate.swift in Sources */,
 				D105CD412A9F62A900BAEBF1 /* SceneDelegate.swift in Sources */,
 			);

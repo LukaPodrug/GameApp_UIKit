@@ -12,8 +12,9 @@ class GameTableViewController: UITableViewController {
         super.viewDidLoad()
         
         title = "Games"
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Settings", style: .done, target: self, action: #selector(showGenreSelectionModal))
+        
+        
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
