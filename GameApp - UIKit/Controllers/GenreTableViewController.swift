@@ -10,9 +10,16 @@ import UIKit
 class GenreTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Genres"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .plain, target: self, action: #selector(submitGenres))
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
+    }
+    
+    @objc func submitGenres() {
+        
     }
 }
