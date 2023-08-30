@@ -34,11 +34,17 @@ class GameDetailsViewController: UIViewController, UICollectionViewDataSource, U
         gameImage.loadImageFromURL(URL: URL(string: game.backgroundImage)!)
         gameImage.contentMode = .scaleAspectFill
         titleLabel.text = "TITLE"
+        titleLabel.font = .boldSystemFont(ofSize: 10)
         gameTitle.text = game.name
+        gameTitle.font = .systemFont(ofSize: 20)
         releasedLabel.text = "RELEASED"
+        releasedLabel.font = .boldSystemFont(ofSize: 10)
         gameReleased.text = game.released
+        gameReleased.font = .systemFont(ofSize: 20)
         ratingLabel.text = "RATING"
-        gameRating.text = "\(game.rating)"
+        ratingLabel.font = .boldSystemFont(ofSize: 10)
+        gameRating.text = "\(game.rating)/5"
+        gameRating.font = .systemFont(ofSize: 20)
         galleryCollection.dataSource = self
         galleryCollection.register(UINib(nibName: "GameDetailsCollectionCell", bundle: nil), forCellWithReuseIdentifier: "GalleryCell")
     }
