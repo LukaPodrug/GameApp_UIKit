@@ -19,6 +19,7 @@
 		D105CD632A9F779100BAEBF1 /* GenreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD622A9F779100BAEBF1 /* GenreTableViewController.swift */; };
 		D105CD652A9F817B00BAEBF1 /* GenreTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D105CD642A9F817B00BAEBF1 /* GenreTableCellView.xib */; };
 		D105CD672A9F822E00BAEBF1 /* GenreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD662A9F822E00BAEBF1 /* GenreTableViewCell.swift */; };
+		D105CD6A2A9F8FFF00BAEBF1 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD692A9F8FFF00BAEBF1 /* APIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		D105CD622A9F779100BAEBF1 /* GenreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewController.swift; sourceTree = "<group>"; };
 		D105CD642A9F817B00BAEBF1 /* GenreTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreTableCellView.xib; sourceTree = "<group>"; };
 		D105CD662A9F822E00BAEBF1 /* GenreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewCell.swift; sourceTree = "<group>"; };
+		D105CD692A9F8FFF00BAEBF1 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 		D105CD3D2A9F62A900BAEBF1 /* GameApp - UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				D105CD682A9F8FA200BAEBF1 /* API */,
 				D105CD532A9F6F5F00BAEBF1 /* Models */,
 				D105CD542A9F6F6500BAEBF1 /* Views */,
 				D105CD552A9F6F8F00BAEBF1 /* Controllers */,
@@ -115,6 +118,14 @@
 				D105CD662A9F822E00BAEBF1 /* GenreTableViewCell.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		D105CD682A9F8FA200BAEBF1 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				D105CD692A9F8FFF00BAEBF1 /* APIManager.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,6 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D105CD6A2A9F8FFF00BAEBF1 /* APIManager.swift in Sources */,
 				D105CD5F2A9F748800BAEBF1 /* GameTableViewController.swift in Sources */,
 				D105CD572A9F6FEF00BAEBF1 /* GenreModel.swift in Sources */,
 				D105CD592A9F712900BAEBF1 /* GameModel.swift in Sources */,

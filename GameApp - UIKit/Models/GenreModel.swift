@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Genre {
+struct Genre: Decodable {
     let id: Int
     let name: String
 }
 
-struct GenreResponse {
+struct GenreResponse: Decodable {
     let count: Int
     let next: String?
     let previous: String?

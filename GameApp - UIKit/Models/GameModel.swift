@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct GameScreenshot {
+struct GameScreenshot: Decodable {
     let image: String
 }
 
-struct GameGenre {
+struct GameGenre: Decodable {
     let id: Int
 }
 
-struct Game {
+struct Game: Decodable {
     let id: Int
     let name: String
     let rating: Decimal
@@ -25,7 +25,7 @@ struct Game {
     let released: String
 }
 
-struct GameResponse {
+struct GameResponse: Decodable {
     let count: Int
     let next: String?
     let previous: String?
