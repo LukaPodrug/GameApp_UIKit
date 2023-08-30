@@ -39,6 +39,12 @@ class GameTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let game = gameResponse.results[indexPath.row]
+        
+        showGameDetailsModal(game: game)
+    }
+    
     func getGamesFromAPI() {
         guard let selectedGenres = UserDefaults().string(forKey: "selectedGenres") else {
             return
@@ -54,6 +60,13 @@ class GameTableViewController: UITableViewController {
                 }
             }
         }
+    }
+    
+    func showGameDetailsModal(game: Game) {
+        let gameDetailsViewController = GameDetailsViewController(game: game)
+        
+        navigationController?.modalPresentationStyle = .pageSheet
+        navigationController?.present(gameDetailsViewController, animated: true)
     }
     
     @objc func showGenreSelectionModal() {
