@@ -9,6 +9,7 @@ import UIKit
 
 class GenreTableViewController: UITableViewController {
     var genreResponse: GenreResponse = GenreResponse(count: 0, next: nil, previous: nil, results: [])
+    var selectedGenres: String = UserDefaults().string(forKey: "selectedGenres") ?? ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,14 +17,12 @@ class GenreTableViewController: UITableViewController {
         getGenresFromAPI()
         
         title = "Genres"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .plain, target: self, action: #selector(submitGenres))
+        if UserDefaults().string(forKey: "selectedGenres") == nil {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        }
         
         tableView.register(UINib(nibName: "GenreTableCellView", bundle: nil), forCellReuseIdentifier: "GenreCell")
-        
-        guard let _ = UserDefaults().string(forKey: "selectedGenres") else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .plain, target: self, action: #selector(submitGenres))
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            return
-        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,8 +35,20 @@ class GenreTableViewController: UITableViewController {
         let genre = genreResponse.results[indexPath.row]
         
         cell.genreLabel.text = genre.name
-        cell.genreSwitch.isOn = false
+        if UserDefaults().string(forKey: "selectedGenres") != nil {
+            if UserDefaults().string(forKey: "selectedGenres")!.split(separator: ",").contains("\(genre.id)") {
+                cell.genreSwitch.isOn = true
+            }
+            else {
+                cell.genreSwitch.isOn = false
+            }
+        }
+        else {
+            cell.genreSwitch.isOn = false
+        }
+        cell.genreSwitch.tag = genre.id
         
+        cell.genreSwitch.addTarget(self, action: #selector(genreSwitchToggled), for: .valueChanged)
         return cell
     }
     
@@ -55,7 +66,33 @@ class GenreTableViewController: UITableViewController {
         }
     }
     
+    @objc func genreSwitchToggled(mySwitch: UISwitch) {
+        if mySwitch.isOn == true {
+            if selectedGenres == "" {
+                selectedGenres = "\(mySwitch.tag)"
+            }
+            else {
+                selectedGenres = selectedGenres + "," + "\(mySwitch.tag)"
+            }
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        }
+        else {
+            var selectedGenresArray = selectedGenres.split(separator: ",")
+            selectedGenresArray.removeAll(where: { $0 == "\(mySwitch.tag)" })
+            
+            let selectedGenresString = selectedGenresArray.joined(separator: ",")
+            
+            UserDefaults().setValue(selectedGenresString, forKey: "selectedGenres")
+            if UserDefaults().string(forKey: "selectedGenres") == nil && selectedGenres == "" {
+                navigationItem.rightBarButtonItem?.isEnabled = false
+            }
+        }
+    }
+    
     @objc func submitGenres() {
-        
+        if selectedGenres != "" {
+            UserDefaults().setValue(selectedGenres, forKey: "selectedGenres")
+        }
+        self.dismiss(animated: true)
     }
 }
