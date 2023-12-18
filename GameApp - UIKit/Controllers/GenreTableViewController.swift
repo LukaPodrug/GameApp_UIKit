@@ -98,7 +98,6 @@ class GenreTableViewController: UITableViewController {
     @objc func submitGenres() {
         if selectedGenres != "" && selectedGenres != UserDefaults().string(forKey: "selectedGenres") {
             UserDefaults().setValue(selectedGenres, forKey: "selectedGenres")
-            print(genreTableViewDelegate)
             genreTableViewDelegate?.modalDismiss()
         }
         dismiss(animated: true)
