@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+class UserDefaultsManager {
+    func saveDataToUserDefaults() {
+        
+    }
+    
+    func getDataFromUserDefaults() {
+        
+    }
+}
