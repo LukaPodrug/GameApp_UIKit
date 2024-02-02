@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  GameDetailsViewController.swift
 //  GameApp
 //
 //  Created by Luka Podrug on 02.02.2024..
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class GameDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }

@@ -17,7 +17,7 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let homeViewController: HomeViewController = HomeViewController()
-        navigationController.pushViewController(homeViewController, animated: true)
+        let gamesListViewController: GamesListViewController = GamesListViewController()
+        navigationController.pushViewController(gamesListViewController, animated: true)
     }
 }

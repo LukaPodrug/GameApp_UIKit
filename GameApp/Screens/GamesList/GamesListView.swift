@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  GamesListView.swift
 //  GameApp
 //
 //  Created by Luka Podrug on 02.02.2024..
@@ -7,6 +7,6 @@
 
 import UIKit
 
-class HomeView: UIView {
+class GamesListView: UIView {
     
 }
