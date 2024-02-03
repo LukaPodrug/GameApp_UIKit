@@ -7,29 +7,46 @@
 
 import Combine
 import UIKit
+import SnapKit
 
 class GenresListViewController: UIViewController {
     var mainCoordinator: MainCoordinator?
     
     var subscriptions: Set<AnyCancellable>
     let genresListViewModel: GenresListViewModel
+    let genresListView: GenresListView
     
     init() {
         self.subscriptions = Set<AnyCancellable>()
         self.genresListViewModel = GenresListViewModel()
+        self.genresListView = GenresListView()
         
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGreen
         
+        setupUI()
         setupUIFunctionality()
+    }
+    
+    func setupUI() {
+        navigationItem.title = "Pick genres"
+        
+        view.backgroundColor = .white
+        
+        view.addSubview(genresListView)
+        genresListView.snp.makeConstraints { make -> Void in
+            make.leading.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.width.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     func setupUIFunctionality() {
