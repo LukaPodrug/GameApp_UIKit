@@ -40,8 +40,6 @@ class GamesListViewController: UIViewController {
                     self.navigateToGenresList(initialGenresChoiceMade: false)
                     return
                 }
-                
-                print(selectedGenresIds!)
             })
             .store(in: &subscriptions)
     }
@@ -49,6 +47,6 @@ class GamesListViewController: UIViewController {
 
 extension GamesListViewController {
     func navigateToGenresList(initialGenresChoiceMade: Bool) {
-        mainCoordinator?.navigateToGenresList(initialGenresChoiceMade: initialGenresChoiceMade)
+        mainCoordinator?.navigateToGenresList()
     }
 }

@@ -6,7 +6,96 @@
 //
 
 import Foundation
+import Combine
 
-class GenresListViewModel {
+class GenresListViewModel: ObservableObject {
+    var cancellables: Set<AnyCancellable>
     
+    @Published var oldSelectedGenresIds: [Int]
+    @Published var genres: [GenreModel]
+    @Published var newSelectedGenresIds: [Int]
+    
+    
+    init() {
+        self.cancellables = Set<AnyCancellable>()
+        
+        self.oldSelectedGenresIds = []
+        self.genres = []
+        self.newSelectedGenresIds = []
+        
+        getOldSelectedGenresIds()
+        getAllGenres()
+    }
+}
+
+extension GenresListViewModel {
+    func getAllGenres() {
+        APIManager.shared.getAllGenres()
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                    case .failure(let error):
+                        self.handleGetAllGenresFailure(message: error.localizedDescription)
+                    default:
+                        break
+                }
+            }
+            receiveValue: { genresResponse in
+                self.handleGetAllGenresSuccess(genres: genresResponse.results)
+            }
+            .store(in: &cancellables)
+    }
+    
+    func handleGetAllGenresFailure(message: String) {
+        
+    }
+    
+    func handleGetAllGenresSuccess(genres: [GenreModel]) {
+        self.genres = genres
+    }
+}
+
+extension GenresListViewModel {
+    func getOldSelectedGenresIds() {
+        UserDefaults.standard
+            .publisher(for: \.selectedGenresIds)
+            .sink(receiveValue: { oldSelectedGenresIds in
+                guard oldSelectedGenresIds != nil else {
+                    return
+                }
+                
+                self.oldSelectedGenresIds = oldSelectedGenresIds ?? []
+                self.newSelectedGenresIds = oldSelectedGenresIds ?? []
+            })
+            .store(in: &cancellables)
+    }
+}
+
+extension GenresListViewModel {
+    var backButtonEnabled: AnyPublisher<Bool, Never> {
+        return $oldSelectedGenresIds
+            .map { oldSelectedGenresIds in
+                if oldSelectedGenresIds.count == 0 {
+                    return false
+                }
+                
+                return true
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var confirmButtonEnabled: AnyPublisher<Bool, Never> {
+        return $newSelectedGenresIds
+            .map { newSelectedGenresIds in
+                let oldSelectedGenresIdsSorted: [Int] = self.oldSelectedGenresIds.sorted()
+                let newSelectedGenresIdsSorted: [Int] = newSelectedGenresIds.sorted()
+                
+                if newSelectedGenresIds.count == 0 && oldSelectedGenresIdsSorted == newSelectedGenresIdsSorted {
+                    return false
+                }
+                
+                return true
+            }
+            .eraseToAnyPublisher()
+    }
 }

@@ -27,8 +27,8 @@ class MainCoordinator: Coordinator {
         navigationController.popViewController(animated: true)
     }
     
-    func navigateToGenresList(initialGenresChoiceMade: Bool) {
-        let genresListViewController: GenresListViewController = GenresListViewController(initialGenresChoiceMade: initialGenresChoiceMade)
+    func navigateToGenresList() {
+        let genresListViewController: GenresListViewController = GenresListViewController()
         genresListViewController.mainCoordinator = self
         navigationController.pushViewController(genresListViewController, animated: true)
     }

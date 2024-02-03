@@ -12,13 +12,11 @@ class GenresListViewController: UIViewController {
     var mainCoordinator: MainCoordinator?
     
     var subscriptions: Set<AnyCancellable>
+    let genresListViewModel: GenresListViewModel
     
-    let initialGenresChoiceMade: Bool
-    
-    init(initialGenresChoiceMade: Bool) {
+    init() {
         self.subscriptions = Set<AnyCancellable>()
-        
-        self.initialGenresChoiceMade = initialGenresChoiceMade
+        self.genresListViewModel = GenresListViewModel()
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,14 +34,25 @@ class GenresListViewController: UIViewController {
     
     func setupUIFunctionality() {
         navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .plain, target: self, action: #selector(confirmButtonTapped))
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(popTopViewController))
-        navigationItem.leftBarButtonItem?.isEnabled = initialGenresChoiceMade
+        genresListViewModel.backButtonEnabled
+            .assign(to: \.navigationItem.leftBarButtonItem!.isEnabled, on: self)
+            .store(in: &subscriptions)
+        
+        genresListViewModel.confirmButtonEnabled
+            .assign(to: \.navigationItem.rightBarButtonItem!.isEnabled, on: self)
+            .store(in: &subscriptions)
     }
 }
 
 extension GenresListViewController {
-    @objc func popTopViewController() {
+    @objc func backButtonTapped() {
         mainCoordinator?.popTopViewController()
+    }
+    
+    @objc func confirmButtonTapped() {
+        
     }
 }
