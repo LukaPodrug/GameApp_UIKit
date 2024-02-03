@@ -10,5 +10,6 @@ import UIKit
 class GameDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBlue
     }
 }

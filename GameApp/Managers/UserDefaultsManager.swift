@@ -7,12 +7,14 @@
 
 import Foundation
 
-class UserDefaultsManager {
-    func saveDataToUserDefaults() {
+extension UserDefaults {
+    @objc var selectedGenresIds: [Int]? {
+        get {
+            return UserDefaults.standard.array(forKey: "selected_genres_ids") as? [Int]
+        }
         
-    }
-    
-    func getDataFromUserDefaults() {
-        
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "selected_genres_ids")
+        }
     }
 }

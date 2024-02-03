@@ -9,15 +9,27 @@ import Foundation
 import UIKit
 
 class MainCoordinator: Coordinator {
-    var childCoordinators: [Coordinator] = [Coordinator]()
-    var navigationController: UINavigationController = UINavigationController()
+    var childCoordinators: [Coordinator]
+    var navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
+        self.childCoordinators = [Coordinator]()
         self.navigationController = navigationController
     }
     
     func start() {
         let gamesListViewController: GamesListViewController = GamesListViewController()
+        gamesListViewController.mainCoordinator = self
         navigationController.pushViewController(gamesListViewController, animated: true)
+    }
+    
+    func popTopViewController() {
+        navigationController.popViewController(animated: true)
+    }
+    
+    func navigateToGenresList(initialGenresChoiceMade: Bool) {
+        let genresListViewController: GenresListViewController = GenresListViewController(initialGenresChoiceMade: initialGenresChoiceMade)
+        genresListViewController.mainCoordinator = self
+        navigationController.pushViewController(genresListViewController, animated: true)
     }
 }
