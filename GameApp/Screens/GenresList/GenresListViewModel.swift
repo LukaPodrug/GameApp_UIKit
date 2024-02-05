@@ -59,12 +59,8 @@ extension GenresListViewModel {
         UserDefaults.standard
             .publisher(for: \.selectedGenresIds)
             .sink(receiveValue: { oldSelectedGenresIds in
-                guard oldSelectedGenresIds != nil else {
-                    return
-                }
-                
-                self.oldSelectedGenresIds = oldSelectedGenresIds!
-                self.newSelectedGenresIds = oldSelectedGenresIds!
+                self.oldSelectedGenresIds = oldSelectedGenresIds
+                self.newSelectedGenresIds = oldSelectedGenresIds
             })
             .store(in: &cancellables)
     }

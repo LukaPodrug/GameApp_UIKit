@@ -46,9 +46,9 @@ class GenresListViewController: UIViewController {
         view.addSubview(genresListView)
         genresListView.snp.makeConstraints { make -> Void in
             make.leading.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.width.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
@@ -107,7 +107,7 @@ extension GenresListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.genreLikeSwitch.tag = genresListViewModel.genres[indexPath.row].id
         cell.genreLikeSwitch.addTarget(self, action: #selector(genreTableCellSwitchTapped(sender:)), for: .valueChanged)
         
-        if genresListViewModel.oldSelectedGenresIds.contains(genresListViewModel.genres[indexPath.row].id) {
+        if genresListViewModel.newSelectedGenresIds.contains(genresListViewModel.genres[indexPath.row].id) {
             cell.genreLikeSwitch.isOn = true
         }
         

@@ -8,9 +8,9 @@
 import Foundation
 
 extension UserDefaults {
-    @objc var selectedGenresIds: [Int]? {
+    @objc var selectedGenresIds: [Int] {
         get {
-            return UserDefaults.standard.array(forKey: "selected_genres_ids") as? [Int]
+            return UserDefaults.standard.array(forKey: "selected_genres_ids") as? [Int] ?? []
         }
         
         set {
