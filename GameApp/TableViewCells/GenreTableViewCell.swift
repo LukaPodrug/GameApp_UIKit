@@ -15,6 +15,7 @@ class GenreTableViewCell: UITableViewCell {
     let genreImageView: UIImageView = {
         let imageView = UIImageView()
         
+        imageView.tintColor = .systemGray2
         imageView.backgroundColor = .systemGray3
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true

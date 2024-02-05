@@ -107,10 +107,6 @@ extension GenresListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.genreLikeSwitch.tag = genresListViewModel.genres[indexPath.row].id
         cell.genreLikeSwitch.addTarget(self, action: #selector(genreTableCellSwitchTapped(sender:)), for: .valueChanged)
         
-        if genresListViewModel.newSelectedGenresIds.contains(genresListViewModel.genres[indexPath.row].id) {
-            cell.genreLikeSwitch.isOn = true
-        }
-        
         guard let imageURL = URL(string: genresListViewModel.genres[indexPath.row].image_background) else {
             cell.genreImageView.image = UIImage(systemName: "photo")
             return cell
@@ -125,6 +121,20 @@ extension GenresListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return genreTableCellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let genreTableCell = cell as? GenreTableViewCell else {
+            return
+        }
+        
+        if genresListViewModel.newSelectedGenresIds.contains(genresListViewModel.genres[indexPath.row].id) {
+            genreTableCell.genreLikeSwitch.isOn = true
+        }
+        
+        else {
+            genreTableCell.genreLikeSwitch.isOn = false
+        }
     }
 }
 

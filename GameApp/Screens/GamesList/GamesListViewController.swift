@@ -104,8 +104,10 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameTableCell", for: indexPath) as! GameTableViewCell
         
         cell.selectionStyle = .none
-        
+
         cell.setupUI()
+        
+        cell.gameGenresCollectionView.register(GenreCollectionViewCell.self, forCellWithReuseIdentifier: "GenreCollectionCell")
         
         cell.gameNameLabel.text = gamesListViewModel.games[indexPath.row].name
         
@@ -123,5 +125,47 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return gameTableCellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let gameTableCell = cell as? GameTableViewCell else {
+            return
+        }
+
+        gameTableCell.setGenresCollectionViewDataSourceAndDelegate(dataSourceAndDelegate: self, forRow: indexPath.row)
+        
+        if indexPath.row == gamesListViewModel.games.count - 3 {
+            gamesListViewModel.getMoreGames()
+        }
+    }
+}
+
+extension GamesListViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return gamesListViewModel.games[collectionView.tag].genres.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenreCollectionCell", for: indexPath) as! GenreCollectionViewCell
+        
+        cell.setupUI()
+        
+        cell.genreNameLabel.text = gamesListViewModel.games[collectionView.tag].genres[indexPath.row].name
+        
+        if UserDefaults.standard.selectedGenresIds.contains(gamesListViewModel.games[collectionView.tag].genres[indexPath.row].id) {
+            cell.genreNameLabel.textColor = .white
+            cell.contentView.backgroundColor = .systemBlue
+        }
+        
+        else {
+            cell.genreNameLabel.textColor = .black
+            cell.contentView.backgroundColor = .systemGray3
+        }
+    
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 0, height: collectionView.frame.height)
     }
 }

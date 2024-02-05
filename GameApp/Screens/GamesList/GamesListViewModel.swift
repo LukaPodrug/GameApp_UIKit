@@ -12,11 +12,15 @@ class GamesListViewModel: ObservableObject {
     var cancellables: Set<AnyCancellable>
 
     @Published var games: [GameModel]
+    var gamesPage: Int
+    var gamesLoadMore: Bool
     
     init() {
         self.cancellables = Set<AnyCancellable>()
         
         self.games = []
+        self.gamesPage = 1
+        self.gamesLoadMore = false
         
         getGames()
     }
@@ -24,7 +28,9 @@ class GamesListViewModel: ObservableObject {
 
 extension GamesListViewModel {
     func getGames() {
-        APIManager.shared.getGames()
+        gamesPage = 1
+        
+        APIManager.shared.getGames(page: gamesPage)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {
@@ -36,6 +42,10 @@ extension GamesListViewModel {
             }
             receiveValue: { gamesResponse in
                 self.handleGetGamesSuccess(games: gamesResponse.results)
+                if gamesResponse.next != nil {
+                    self.gamesLoadMore = true
+                    self.gamesPage = self.gamesPage + 1
+                }
             }
             .store(in: &cancellables)
     }
@@ -45,6 +55,37 @@ extension GamesListViewModel {
     }
     
     func handleGetGamesSuccess(games: [GameModel]) {
+        self.games = games
+    }
+    
+    func getMoreGames() {
+        if gamesLoadMore == true {
+            APIManager.shared.getGames(page: gamesPage)
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    switch completion {
+                    case .failure(let error):
+                        self.handleGetMoreGamesFailure(message: error.localizedDescription)
+                    default:
+                        break
+                    }
+                }
+                receiveValue: { gamesResponse in
+                    self.handleGetMoreGamesSuccess(games: gamesResponse.results)
+                    if gamesResponse.next != nil {
+                        self.gamesLoadMore = true
+                        self.gamesPage = self.gamesPage + 1
+                    }
+                }
+                .store(in: &cancellables)
+        }
+    }
+    
+    func handleGetMoreGamesFailure(message: String) {
+        
+    }
+    
+    func handleGetMoreGamesSuccess(games: [GameModel]) {
         self.games.append(contentsOf: games)
     }
 }

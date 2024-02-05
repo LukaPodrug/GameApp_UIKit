@@ -12,9 +12,12 @@ class GameTableViewCell: UITableViewCell {
     let horizontalOffset: CGFloat = 5
     let verticalOffset: CGFloat = 5
     
+    let genresCollectionViewHeight: CGFloat = 30
+    
     let gameImageView: UIImageView = {
         let imageView = UIImageView()
         
+        imageView.tintColor = .systemGray2
         imageView.backgroundColor = .systemGray3
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
@@ -26,6 +29,19 @@ class GameTableViewCell: UITableViewCell {
         let label = UILabel()
         
         return label
+    }()
+    
+    let gameGenresCollectionView: UICollectionView = {
+        let collectionViewFlowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        collectionViewFlowLayout.scrollDirection = .horizontal
+        collectionViewFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewFlowLayout)
+    
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        
+        return collectionView
     }()
     
     func setupUI() {
@@ -48,12 +64,29 @@ class GameTableViewCell: UITableViewCell {
             make.width.equalTo(gameImageView.snp.height)
         }
         
+        contentView.addSubview(gameGenresCollectionView)
+        gameGenresCollectionView.snp.makeConstraints { make -> Void in
+            make.leading.equalTo(gameImageView.snp.trailing).offset(2 * horizontalOffset)
+            make.trailing.equalToSuperview().offset(-horizontalOffset)
+            make.bottom.equalToSuperview().offset(-verticalOffset)
+            make.height.equalTo(genresCollectionViewHeight)
+        }
+        
         contentView.addSubview(gameNameLabel)
         gameNameLabel.snp.makeConstraints { make -> Void in
             make.leading.equalTo(gameImageView.snp.trailing).offset(2 * horizontalOffset)
             make.trailing.equalToSuperview().offset(-horizontalOffset)
             make.top.equalToSuperview().offset(verticalOffset)
-            make.bottom.equalToSuperview().offset(-verticalOffset)
+            make.bottom.equalTo(gameGenresCollectionView.snp.top).offset(-verticalOffset)
         }
+    }
+}
+
+extension GameTableViewCell {
+    func setGenresCollectionViewDataSourceAndDelegate(dataSourceAndDelegate: UICollectionViewDataSource & UICollectionViewDelegate, forRow row: Int) {
+        gameGenresCollectionView.delegate = dataSourceAndDelegate
+        gameGenresCollectionView.dataSource = dataSourceAndDelegate
+        gameGenresCollectionView.tag = row
+        gameGenresCollectionView.reloadData()
     }
 }

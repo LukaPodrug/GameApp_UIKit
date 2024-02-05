@@ -91,8 +91,8 @@ class APIManager {
         }
     }
     
-    func getGames() -> Future<GamesResponseModel, Error> {
-        let fullAPIURL: String = baseAPIURL + "/games" + "?" + "genres=\(UserDefaults.standard.selectedGenresIds.toString())" + "&" + "key=\(APIKey)"
+    func getGames(page: Int) -> Future<GamesResponseModel, Error> {
+        let fullAPIURL: String = baseAPIURL + "/games" + "?" + "genres=\(UserDefaults.standard.selectedGenresIds.toString())" + "&" + "page=\(page)" + "&" + "key=\(APIKey)"
         
         return Future<GamesResponseModel, Error> { promise in
             guard let url = URL(string: fullAPIURL) else {
@@ -127,7 +127,6 @@ class APIManager {
                     if case let .failure(error) = completion {
                         switch error {
                             case let decodingError as DecodingError:
-                                print(decodingError)
                                 promise(.failure(decodingError))
                             case let apiError as APIError:
                                 promise(.failure(apiError))
