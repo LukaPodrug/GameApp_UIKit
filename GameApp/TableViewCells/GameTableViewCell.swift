@@ -5,6 +5,7 @@
 //  Created by Luka Podrug on 02.02.2024..
 //
 
+import SwiftUI
 import UIKit
 import SnapKit
 
@@ -28,6 +29,8 @@ class GameTableViewCell: UITableViewCell {
     let gameNameLabel: UILabel = {
         let label = UILabel()
         
+        label.font = .systemFont(ofSize: 15)
+        
         return label
     }()
     
@@ -39,9 +42,27 @@ class GameTableViewCell: UITableViewCell {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewFlowLayout)
     
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = .systemGray3
+        collectionView.layer.cornerRadius = 10
         
         return collectionView
+    }()
+    
+    let gameRatingDonutChartHostingController: UIHostingController = {
+        let hostingController = UIHostingController(rootView: DonutChart(statistics: [GameRatingDonutChartModel(title: "Default", value: 1, color: .gray)]))
+        
+        hostingController.view.backgroundColor = .clear
+        
+        return hostingController
+    }()
+    
+    let gameRatingLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = .systemFont(ofSize: 12)
+        label.textAlignment = .center
+        
+        return label
     }()
     
     func setupUI() {
@@ -64,10 +85,18 @@ class GameTableViewCell: UITableViewCell {
             make.width.equalTo(gameImageView.snp.height)
         }
         
+        contentView.addSubview(gameRatingDonutChartHostingController.view)
+        gameRatingDonutChartHostingController.view.snp.makeConstraints { make -> Void in
+            make.trailing.equalToSuperview().offset(-horizontalOffset)
+            make.top.equalToSuperview().offset(verticalOffset)
+            make.bottom.equalToSuperview().offset(-verticalOffset)
+            make.width.equalTo(gameImageView.snp.height)
+        }
+        
         contentView.addSubview(gameGenresCollectionView)
         gameGenresCollectionView.snp.makeConstraints { make -> Void in
             make.leading.equalTo(gameImageView.snp.trailing).offset(2 * horizontalOffset)
-            make.trailing.equalToSuperview().offset(-horizontalOffset)
+            make.trailing.equalTo(gameRatingDonutChartHostingController.view.snp.leading).offset(-2 * horizontalOffset)
             make.bottom.equalToSuperview().offset(-verticalOffset)
             make.height.equalTo(genresCollectionViewHeight)
         }
@@ -75,9 +104,17 @@ class GameTableViewCell: UITableViewCell {
         contentView.addSubview(gameNameLabel)
         gameNameLabel.snp.makeConstraints { make -> Void in
             make.leading.equalTo(gameImageView.snp.trailing).offset(2 * horizontalOffset)
-            make.trailing.equalToSuperview().offset(-horizontalOffset)
+            make.trailing.equalTo(gameRatingDonutChartHostingController.view.snp.leading).offset(-2 * horizontalOffset)
             make.top.equalToSuperview().offset(verticalOffset)
             make.bottom.equalTo(gameGenresCollectionView.snp.top).offset(-verticalOffset)
+        }
+        
+        contentView.addSubview(gameRatingLabel)
+        gameRatingLabel.snp.makeConstraints { make -> Void in
+            make.centerX.equalTo(gameRatingDonutChartHostingController.view)
+            make.centerY.equalTo(gameRatingDonutChartHostingController.view)
+            make.width.equalTo(gameRatingDonutChartHostingController.view)
+            make.height.equalTo(gameRatingDonutChartHostingController.view)
         }
     }
 }

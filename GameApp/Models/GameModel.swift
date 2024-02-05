@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct GamesResponseModel: Decodable {
     let count: Int
@@ -17,7 +18,6 @@ struct GameModel: Decodable {
     let id: Int
     let name: String
     let rating: Float
-    let rating_top: Float
     let background_image: String
     let genres: [GameGenreModel]
 }
@@ -25,4 +25,11 @@ struct GameModel: Decodable {
 struct GameGenreModel: Decodable {
     let id: Int
     let name: String
+}
+
+struct GameRatingDonutChartModel: Identifiable {
+    let id: UUID = UUID()
+    let title: String
+    let value: Float
+    let color: Color
 }

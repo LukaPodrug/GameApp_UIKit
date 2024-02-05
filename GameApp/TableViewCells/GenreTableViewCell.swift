@@ -26,6 +26,8 @@ class GenreTableViewCell: UITableViewCell {
     let genreNameLabel: UILabel = {
         let label = UILabel()
         
+        label.font = .systemFont(ofSize: 15)
+        
         return label
     }()
     
@@ -57,7 +59,7 @@ class GenreTableViewCell: UITableViewCell {
         
         contentView.addSubview(genreLikeSwitch)
         genreLikeSwitch.snp.makeConstraints { make -> Void in
-            make.trailing.equalToSuperview().offset(-horizontalOffset)
+            make.trailing.equalToSuperview().offset(-2 * horizontalOffset)
             make.centerY.equalToSuperview()
         }
         

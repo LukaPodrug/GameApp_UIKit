@@ -111,6 +111,10 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.gameNameLabel.text = gamesListViewModel.games[indexPath.row].name
         
+        cell.gameRatingDonutChartHostingController.rootView = DonutChart(statistics: [GameRatingDonutChartModel(title: "Rating", value: gamesListViewModel.games[indexPath.row].rating, color: .blue), GameRatingDonutChartModel(title: "Gap", value: 5 - gamesListViewModel.games[indexPath.row].rating, color: .clear)])
+        
+        cell.gameRatingLabel.text = "\(gamesListViewModel.games[indexPath.row].rating)"
+        
         guard let imageURL = URL(string: gamesListViewModel.games[indexPath.row].background_image) else {
             cell.gameImageView.image = UIImage(systemName: "photo")
             return cell
@@ -159,13 +163,13 @@ extension GamesListViewController: UICollectionViewDataSource, UICollectionViewD
         
         else {
             cell.genreNameLabel.textColor = .black
-            cell.contentView.backgroundColor = .systemGray3
+            cell.contentView.backgroundColor = .systemGray2
         }
     
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 0, height: collectionView.frame.height)
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
 }
