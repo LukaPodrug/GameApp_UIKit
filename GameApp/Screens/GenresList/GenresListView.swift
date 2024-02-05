@@ -29,6 +29,17 @@ class GenresListView: UIView {
         return view
     }()
     
+    let genresTableView: UITableView = {
+        let tableView = UITableView()
+        
+        tableView.backgroundColor = .systemGray5
+        tableView.layer.cornerRadius = 10
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
+        
+        return tableView
+    }()
+    
     init() {
         super.init(frame: CGRect.zero)
     }
@@ -41,9 +52,9 @@ class GenresListView: UIView {
         addSubview(scrollView)
         scrollView.snp.makeConstraints { make -> Void in
             make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         
         scrollView.addSubview(contentView)
@@ -53,6 +64,14 @@ class GenresListView: UIView {
             make.bottom.equalToSuperview().offset(-verticalOffset)
             make.width.equalToSuperview().offset(-2 * horizontalOffset)
             make.height.greaterThanOrEqualToSuperview().offset(-2 * verticalOffset)
+        }
+        
+        contentView.addSubview(genresTableView)
+        genresTableView.snp.makeConstraints { make -> Void in
+            make.leading.equalToSuperview().offset(horizontalOffset)
+            make.trailing.equalToSuperview().offset(-horizontalOffset)
+            make.top.equalToSuperview().offset(verticalOffset)
+            make.bottom.equalToSuperview().offset(-verticalOffset)
         }
     }
 }

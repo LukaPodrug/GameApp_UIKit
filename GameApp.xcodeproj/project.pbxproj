@@ -31,6 +31,7 @@
 		D1CB39952B6D570B007DA5B7 /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39942B6D570B007DA5B7 /* GenreCollectionViewCell.swift */; };
 		D1CB39992B6E7CBF007DA5B7 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1CB39982B6E7CBF007DA5B7 /* Config.plist */; };
 		D1CB399C2B6E7D5C007DA5B7 /* GenreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB399B2B6E7D5C007DA5B7 /* GenreModel.swift */; };
+		D1CB399F2B70E511007DA5B7 /* Published.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB399E2B70E511007DA5B7 /* Published.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		D1CB39942B6D570B007DA5B7 /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1CB39982B6E7CBF007DA5B7 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		D1CB399B2B6E7D5C007DA5B7 /* GenreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreModel.swift; sourceTree = "<group>"; };
+		D1CB399E2B70E511007DA5B7 /* Published.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Published.swift; sourceTree = "<group>"; };
 		D5AB04D48FD04ED241B5CA20 /* Pods-GameApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameApp.debug.xcconfig"; path = "Target Support Files/Pods-GameApp/Pods-GameApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +116,7 @@
 		D1CB39562B6BF92E007DA5B7 /* GameApp */ = {
 			isa = PBXGroup;
 			children = (
+				D1CB399D2B70E506007DA5B7 /* Extensions */,
 				D1CB399A2B6E7D53007DA5B7 /* Models */,
 				D1CB39782B6CE0D1007DA5B7 /* Screens */,
 				D1CB398F2B6D5638007DA5B7 /* TableViewCells */,
@@ -220,6 +223,14 @@
 				D1CB399B2B6E7D5C007DA5B7 /* GenreModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D1CB399D2B70E506007DA5B7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D1CB399E2B70E511007DA5B7 /* Published.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,6 +361,7 @@
 				D1CB39802B6CE14D007DA5B7 /* GenresListView.swift in Sources */,
 				D1CB39822B6CE161007DA5B7 /* GameDetailsViewModel.swift in Sources */,
 				D1CB39932B6D56A8007DA5B7 /* GameTableViewCell.swift in Sources */,
+				D1CB399F2B70E511007DA5B7 /* Published.swift in Sources */,
 				D1CB39952B6D570B007DA5B7 /* GenreCollectionViewCell.swift in Sources */,
 				D1CB39892B6CE2CC007DA5B7 /* UserDefaultsManager.swift in Sources */,
 				D1CB39732B6C5D5B007DA5B7 /* GamesListViewModel.swift in Sources */,

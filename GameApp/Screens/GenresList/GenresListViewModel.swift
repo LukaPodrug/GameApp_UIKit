@@ -15,7 +15,6 @@ class GenresListViewModel: ObservableObject {
     @Published var genres: [GenreModel]
     @Published var newSelectedGenresIds: [Int]
     
-    
     init() {
         self.cancellables = Set<AnyCancellable>()
         
@@ -64,10 +63,14 @@ extension GenresListViewModel {
                     return
                 }
                 
-                self.oldSelectedGenresIds = oldSelectedGenresIds ?? []
-                self.newSelectedGenresIds = oldSelectedGenresIds ?? []
+                self.oldSelectedGenresIds = oldSelectedGenresIds!
+                self.newSelectedGenresIds = oldSelectedGenresIds!
             })
             .store(in: &cancellables)
+    }
+    
+    func updateSelectedGenresIds() {
+        UserDefaults.standard.selectedGenresIds = newSelectedGenresIds
     }
 }
 
@@ -90,7 +93,19 @@ extension GenresListViewModel {
                 let oldSelectedGenresIdsSorted: [Int] = self.oldSelectedGenresIds.sorted()
                 let newSelectedGenresIdsSorted: [Int] = newSelectedGenresIds.sorted()
                 
-                if newSelectedGenresIds.count == 0 && oldSelectedGenresIdsSorted == newSelectedGenresIdsSorted {
+                if newSelectedGenresIds.count == 0 || oldSelectedGenresIdsSorted == newSelectedGenresIdsSorted {
+                    return false
+                }
+                
+                return true
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var updateGenresTableView: AnyPublisher<Bool, Never> {
+        return $genres.didSet
+            .map { genres in
+                if genres.count == 0 {
                     return false
                 }
                 
