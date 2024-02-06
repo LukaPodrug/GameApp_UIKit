@@ -47,6 +47,19 @@ class GameDetailsViewController: UIViewController {
     }
     
     func setupUIFunctionality() {
+        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+        activityIndicatorView.backgroundColor = .systemGray5
+        activityIndicatorView.layer.zPosition = 1
+        activityIndicatorView.startAnimating()
+        
+        gameDetailsListView.gameDataView.addSubview(activityIndicatorView)
+        activityIndicatorView.snp.makeConstraints { make -> Void in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        
         UserDefaults.standard
             .publisher(for: \.selectedGameId)
             .sink(receiveValue: { selectedGameId in
@@ -57,6 +70,7 @@ class GameDetailsViewController: UIViewController {
         gameDetailsViewModel.updateGameDetailsData
             .sink { updateGameDetailsData in
                 if updateGameDetailsData == true {
+                    activityIndicatorView.removeFromSuperview()
                     self.setupUIData()
                 }
             }

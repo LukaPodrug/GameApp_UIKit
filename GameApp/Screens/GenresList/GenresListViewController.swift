@@ -57,6 +57,12 @@ class GenresListViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonTapped))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .plain, target: self, action: #selector(confirmButtonTapped))
         
+        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.startAnimating()
+        
+        genresListView.genresTableView.backgroundView = activityIndicatorView
+        
         genresListViewModel.backButtonEnabled
             .assign(to: \.navigationItem.leftBarButtonItem!.isEnabled, on: self)
             .store(in: &subscriptions)
@@ -68,6 +74,7 @@ class GenresListViewController: UIViewController {
         genresListViewModel.updateGenresTableView
             .sink { updateGenresTableView in
                 if updateGenresTableView == true {
+                    activityIndicatorView.stopAnimating()
                     self.genresListView.genresTableView.reloadData()
                 }
             }

@@ -56,6 +56,12 @@ class GamesListViewController: UIViewController {
         navigationItem.hidesBackButton = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Genres", style: .plain, target: self, action: #selector(genresButtonTapped))
         
+        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.startAnimating()
+        
+        gamesListView.gamesTableView.backgroundView = activityIndicatorView
+        
         UserDefaults.standard
             .publisher(for: \.selectedGenresIds)
             .sink(receiveValue: { selectedGenresIds in
@@ -71,6 +77,7 @@ class GamesListViewController: UIViewController {
         gamesListViewModel.updateGamesTableView
             .sink { updateGamesTableView in
                 if updateGamesTableView == true {
+                    activityIndicatorView.stopAnimating()
                     self.gamesListView.gamesTableView.reloadData()
                 }
             }
