@@ -140,6 +140,56 @@ class APIManager {
                 .store(in: &self.cancellables)
         }
     }
+    
+    func getGameDetails() -> Future<GameDetailsModel, Error> {
+        let fullAPIURL: String = baseAPIURL + "/games" + "/\(UserDefaults.standard.selectedGameId)" + "?" + "key=\(APIKey)"
+        
+        return Future<GameDetailsModel, Error> { promise in
+            guard let url = URL(string: fullAPIURL) else {
+                return promise(.failure(APIError.invalidURL))
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            
+            URLSession.shared.dataTaskPublisher(for: request)
+                .receive(on: DispatchQueue.main)
+                .tryMap { (data, response) -> Data in
+                    guard let httpResponse = response as? HTTPURLResponse else {
+                        throw APIError.missingResponse
+                    }
+                    if 400...499 ~= httpResponse.statusCode {
+                        throw APIError.user
+                    }
+                    
+                    else if 500...599 ~= httpResponse.statusCode {
+                        throw APIError.server
+                    }
+                    
+                    else if !(200...299 ~= httpResponse.statusCode) {
+                        throw APIError.unknown
+                    }
+                    
+                    return data
+                }
+                .decode(type: GameDetailsModel.self, decoder: JSONDecoder())
+                .sink(receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        switch error {
+                            case let decodingError as DecodingError:
+                                promise(.failure(decodingError))
+                            case let apiError as APIError:
+                                promise(.failure(apiError))
+                            default:
+                                promise(.failure(APIError.unknown))
+                        }
+                    }
+                }, receiveValue: { data in
+                    promise(.success(data))
+                })
+                .store(in: &self.cancellables)
+        }
+    }
 }
 
 extension APIManager {

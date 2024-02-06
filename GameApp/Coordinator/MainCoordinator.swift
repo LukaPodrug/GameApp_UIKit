@@ -32,4 +32,9 @@ class MainCoordinator: Coordinator {
         genresListViewController.mainCoordinator = self
         navigationController.pushViewController(genresListViewController, animated: true)
     }
+    
+    func presentGameDetails() {
+        let gameDetailsViewController: GameDetailsViewController = GameDetailsViewController()
+        navigationController.present(gameDetailsViewController, animated: true)
+    }
 }

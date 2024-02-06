@@ -127,3 +127,25 @@ extension GameTableViewCell {
         gameGenresCollectionView.reloadData()
     }
 }
+
+extension GameTableViewCell {
+    func onPressAnimation() {
+        UIView.transition(
+            with: self,
+            duration: 0.0,
+            options: .transitionCrossDissolve,
+            animations: { self.contentView.alpha = 0.5 },
+            completion: { _ in self.onAnimationEnd() }
+        )
+    }
+    
+    func onAnimationEnd() {
+        UIView.transition(
+            with: self,
+            duration: 0.4,
+            options: .transitionCrossDissolve,
+            animations: { self.contentView.alpha = 1 },
+            completion: nil
+        )
+    }
+}

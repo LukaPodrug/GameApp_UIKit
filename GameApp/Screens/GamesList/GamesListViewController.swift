@@ -33,7 +33,6 @@ class GamesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemRed
         
         setupUI()
         setupUIFunctionality()
@@ -112,8 +111,8 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.gameNameLabel.text = gamesListViewModel.games[indexPath.row].name
         
         cell.gameRatingDonutChartHostingController.rootView = DonutChart(statistics: [GameRatingDonutChartModel(title: "Rating", value: gamesListViewModel.games[indexPath.row].rating, color: .blue), GameRatingDonutChartModel(title: "Gap", value: 5 - gamesListViewModel.games[indexPath.row].rating, color: .clear)])
-        
-        cell.gameRatingLabel.text = "\(gamesListViewModel.games[indexPath.row].rating)"
+
+        cell.gameRatingLabel.text = String(format: "%.1f", gamesListViewModel.games[indexPath.row].rating / 5 * 100) + "%"
         
         guard let imageURL = URL(string: gamesListViewModel.games[indexPath.row].background_image) else {
             cell.gameImageView.image = UIImage(systemName: "photo")
@@ -122,7 +121,7 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.gameImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.gameImageView.sd_imageIndicator?.startAnimatingIndicator()
-        cell.gameImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(systemName: "photo"), options: .continueInBackground, completed: nil)
+        cell.gameImageView.sd_setImage(with: imageURL, placeholderImage: nil, options: .continueInBackground, completed: nil)
         
         return cell
     }
@@ -141,6 +140,21 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == gamesListViewModel.games.count - 3 {
             gamesListViewModel.getMoreGames()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! GameTableViewCell
+        
+        cell.onPressAnimation()
+        
+        gameTableCellTapped(gameId: gamesListViewModel.games[indexPath.row].id)
+    }
+}
+
+extension GamesListViewController {
+    func gameTableCellTapped(gameId: Int) {
+        UserDefaults.standard.selectedGameId = gameId
+        mainCoordinator?.presentGameDetails()
     }
 }
 

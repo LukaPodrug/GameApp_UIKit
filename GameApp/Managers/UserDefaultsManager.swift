@@ -17,4 +17,14 @@ extension UserDefaults {
             UserDefaults.standard.setValue(newValue, forKey: "selected_genres_ids")
         }
     }
+    
+    @objc var selectedGameId: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: "selected_game_id")
+        }
+        
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "selected_game_id")
+        }
+    }
 }
