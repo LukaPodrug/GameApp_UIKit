@@ -21,7 +21,7 @@ class GamesListViewController: UIViewController {
     
     init() {
         self.subscriptions = Set<AnyCancellable>()
-        self.gamesListViewModel = GamesListViewModel()
+        self.gamesListViewModel = GamesListViewModel(mainCoordinator: mainCoordinator)
         self.gamesListView = GamesListView()
         
         super.init(nibName: nil, bundle: nil)

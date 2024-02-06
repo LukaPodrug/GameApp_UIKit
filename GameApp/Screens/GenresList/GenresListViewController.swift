@@ -21,7 +21,7 @@ class GenresListViewController: UIViewController {
     
     init() {
         self.subscriptions = Set<AnyCancellable>()
-        self.genresListViewModel = GenresListViewModel()
+        self.genresListViewModel = GenresListViewModel(mainCoordinator: mainCoordinator)
         self.genresListView = GenresListView()
         
         super.init(nibName: nil, bundle: nil)

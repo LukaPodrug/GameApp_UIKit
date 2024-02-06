@@ -10,13 +10,17 @@ import Combine
 
 class GamesListViewModel: ObservableObject {
     var cancellables: Set<AnyCancellable>
+    
+    let mainCoordinator: MainCoordinator?
 
     @Published var games: [GameModel]
     var gamesPage: Int
     var gamesLoadMore: Bool
     
-    init() {
+    init(mainCoordinator: MainCoordinator?) {
         self.cancellables = Set<AnyCancellable>()
+        
+        self.mainCoordinator = mainCoordinator
         
         self.games = []
         self.gamesPage = 1
@@ -51,7 +55,7 @@ extension GamesListViewModel {
     }
     
     func handleGetGamesFailure(message: String) {
-        
+        mainCoordinator?.presentGetGamesFailure()
     }
     
     func handleGetGamesSuccess(games: [GameModel]) {
@@ -64,11 +68,11 @@ extension GamesListViewModel {
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
                     switch completion {
-                    case .failure(let error):
-                        self.handleGetMoreGamesFailure(message: error.localizedDescription)
-                    default:
-                        break
-                    }
+                        case .failure(let error):
+                            self.handleGetMoreGamesFailure(message: error.localizedDescription)
+                        default:
+                            break
+                        }
                 }
                 receiveValue: { gamesResponse in
                     self.handleGetMoreGamesSuccess(games: gamesResponse.results)
@@ -82,7 +86,7 @@ extension GamesListViewModel {
     }
     
     func handleGetMoreGamesFailure(message: String) {
-        
+        mainCoordinator?.presentGetGamesFailure()
     }
     
     func handleGetMoreGamesSuccess(games: [GameModel]) {

@@ -10,11 +10,15 @@ import Combine
 
 class GameDetailsViewModel: ObservableObject {
     var cancellables: Set<AnyCancellable>
+    
+    let mainCoordinator: MainCoordinator?
 
     @Published var gameDetails: GameDetailsModel?
     
-    init() {
+    init(mainCoordinator: MainCoordinator?) {
         self.cancellables = Set<AnyCancellable>()
+        
+        self.mainCoordinator = mainCoordinator
         
         self.gameDetails = nil
         
@@ -41,7 +45,7 @@ extension GameDetailsViewModel {
     }
     
     func handleGetGameDetailsFailure(message: String) {
-
+        mainCoordinator?.presentGetGameDetailsFailure()
     }
     
     func handleGetGameDetailsSuccess(gameDetails: GameDetailsModel) {

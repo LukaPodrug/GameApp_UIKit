@@ -9,11 +9,9 @@ import Foundation
 import UIKit
 
 class MainCoordinator: Coordinator {
-    var childCoordinators: [Coordinator]
     var navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
-        self.childCoordinators = [Coordinator]()
         self.navigationController = navigationController
     }
     
@@ -35,6 +33,27 @@ class MainCoordinator: Coordinator {
     
     func presentGameDetails() {
         let gameDetailsViewController: GameDetailsViewController = GameDetailsViewController()
+        gameDetailsViewController.mainCoordinator = self
         navigationController.present(gameDetailsViewController, animated: true)
+    }
+}
+
+extension MainCoordinator {
+    func presentGetAllGenresFailure() {
+        let alertController: UIAlertController = UIAlertController(title: "Error with fetching genres", message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: nil))
+        navigationController.present(alertController, animated: true)
+    }
+    
+    func presentGetGamesFailure() {
+        let alertController: UIAlertController = UIAlertController(title: "Error with fetching games", message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: nil))
+        navigationController.present(alertController, animated: true)
+    }
+    
+    func presentGetGameDetailsFailure() {
+        let alertController: UIAlertController = UIAlertController(title: "Error with fetching game details", message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: nil))
+        navigationController.present(alertController, animated: true)
     }
 }

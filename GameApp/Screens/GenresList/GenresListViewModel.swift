@@ -11,12 +11,16 @@ import Combine
 class GenresListViewModel: ObservableObject {
     var cancellables: Set<AnyCancellable>
     
+    let mainCoordinator: MainCoordinator?
+    
     @Published var oldSelectedGenresIds: [Int]
     @Published var genres: [GenreModel]
     @Published var newSelectedGenresIds: [Int]
     
-    init() {
+    init(mainCoordinator: MainCoordinator?) {
         self.cancellables = Set<AnyCancellable>()
+        
+        self.mainCoordinator = mainCoordinator
         
         self.oldSelectedGenresIds = []
         self.genres = []
@@ -46,7 +50,7 @@ extension GenresListViewModel {
     }
     
     func handleGetAllGenresFailure(message: String) {
-        
+        mainCoordinator?.presentGetAllGenresFailure()
     }
     
     func handleGetAllGenresSuccess(genres: [GenreModel]) {

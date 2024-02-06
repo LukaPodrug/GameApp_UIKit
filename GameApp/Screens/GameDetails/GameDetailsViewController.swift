@@ -11,13 +11,15 @@ import SnapKit
 import SDWebImage
 
 class GameDetailsViewController: UIViewController {
+    var mainCoordinator: MainCoordinator?
+    
     var subscriptions: Set<AnyCancellable>
     let gameDetailsViewModel: GameDetailsViewModel
     let gameDetailsListView: GameDetailsView
     
     init() {
         self.subscriptions = Set<AnyCancellable>()
-        self.gameDetailsViewModel = GameDetailsViewModel()
+        self.gameDetailsViewModel = GameDetailsViewModel(mainCoordinator: mainCoordinator)
         self.gameDetailsListView = GameDetailsView()
         
         super.init(nibName: nil, bundle: nil)
