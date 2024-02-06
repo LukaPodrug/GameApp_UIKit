@@ -38,8 +38,6 @@ class APIManager {
     
     var cancellables = Set<AnyCancellable>()
     
-    let baseAPIURL: String = "https://api.rawg.io/api"
-    
     func getAllGenres() -> Future<GenresResponseModel, Error> {
         let fullAPIURL: String = baseAPIURL + "/genres" + "?" + "key=\(APIKey)"
         
@@ -206,6 +204,22 @@ extension APIManager {
             }
             
             return APIKey
+        }
+    }
+    
+    private var baseAPIURL: String {
+        get {
+            guard let configPlistFilePath: String = Bundle.main.path(forResource: "Config", ofType: "plist") else {
+                fatalError("Could not find Config.plist file")
+            }
+            
+            let configPlist: NSDictionary? = NSDictionary(contentsOfFile: configPlistFilePath)
+            
+            guard let baseAPIURL = configPlist?.object(forKey: "BASE_API_URL") as? String else {
+                fatalError("Could not find BASE_API_URL in Config.plist file")
+            }
+            
+            return baseAPIURL
         }
     }
 }
