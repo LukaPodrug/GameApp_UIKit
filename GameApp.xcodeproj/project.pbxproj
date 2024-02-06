@@ -35,6 +35,7 @@
 		D1CB39A32B710805007DA5B7 /* [Int].swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39A22B710805007DA5B7 /* [Int].swift */; };
 		D1CB39A62B7144BD007DA5B7 /* DonutChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39A52B7144BD007DA5B7 /* DonutChart.swift */; };
 		D1CB39A82B722E38007DA5B7 /* GameDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39A72B722E38007DA5B7 /* GameDetailsModel.swift */; };
+		D1CB39AA2B72597C007DA5B7 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39A92B72597C007DA5B7 /* TableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		D1CB39A22B710805007DA5B7 /* [Int].swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "[Int].swift"; sourceTree = "<group>"; };
 		D1CB39A52B7144BD007DA5B7 /* DonutChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonutChart.swift; sourceTree = "<group>"; };
 		D1CB39A72B722E38007DA5B7 /* GameDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailsModel.swift; sourceTree = "<group>"; };
+		D1CB39A92B72597C007DA5B7 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		D5AB04D48FD04ED241B5CA20 /* Pods-GameApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameApp.debug.xcconfig"; path = "Target Support Files/Pods-GameApp/Pods-GameApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -238,6 +240,7 @@
 			children = (
 				D1CB399E2B70E511007DA5B7 /* Published.swift */,
 				D1CB39A22B710805007DA5B7 /* [Int].swift */,
+				D1CB39A92B72597C007DA5B7 /* TableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				D1CB39862B6CE183007DA5B7 /* GameDetailsView.swift in Sources */,
 				D1CB39582B6BF92E007DA5B7 /* AppDelegate.swift in Sources */,
 				D1CB39772B6C5D74007DA5B7 /* GamesListView.swift in Sources */,
+				D1CB39AA2B72597C007DA5B7 /* TableView.swift in Sources */,
 				D1CB39912B6D5671007DA5B7 /* GenreTableViewCell.swift in Sources */,
 				D1CB397E2B6CE139007DA5B7 /* GenresListViewController.swift in Sources */,
 				D1CB39702B6C5C73007DA5B7 /* MainCoordinator.swift in Sources */,

@@ -78,7 +78,7 @@ class GamesListViewController: UIViewController {
             .sink { updateGamesTableView in
                 if updateGamesTableView == true {
                     activityIndicatorView.stopAnimating()
-                    self.gamesListView.gamesTableView.reloadData()
+                    self.gamesListView.gamesTableView.animatedReload()
                 }
             }
             .store(in: &subscriptions)

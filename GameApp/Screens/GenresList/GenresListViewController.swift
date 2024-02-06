@@ -75,7 +75,7 @@ class GenresListViewController: UIViewController {
             .sink { updateGenresTableView in
                 if updateGenresTableView == true {
                     activityIndicatorView.stopAnimating()
-                    self.genresListView.genresTableView.reloadData()
+                    self.genresListView.genresTableView.animatedReload()
                 }
             }
             .store(in: &subscriptions)
