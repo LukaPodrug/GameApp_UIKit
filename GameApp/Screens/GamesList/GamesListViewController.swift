@@ -58,6 +58,7 @@ class GamesListViewController: UIViewController {
         
         let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
         activityIndicatorView.backgroundColor = .systemGray5
+        activityIndicatorView.layer.cornerRadius = 10
         activityIndicatorView.layer.zPosition = 1
         
         UserDefaults.standard

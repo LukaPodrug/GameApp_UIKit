@@ -90,6 +90,15 @@ class GameDetailsView: UIView {
         return textView
     }()
     
+    let gameChartsView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = .systemGray4
+        view.layer.cornerRadius = 10
+        
+        return view
+    }()
+    
     let gameRatingLabel: UILabel = {
         let label = UILabel()
         
@@ -218,23 +227,31 @@ class GameDetailsView: UIView {
             make.height.equalTo(textViewHeight)
         }
         
-        gameDataView.addSubview(gameRatingLabel)
+        gameDataView.addSubview(gameChartsView)
+        gameChartsView.snp.makeConstraints { make -> Void in
+            make.leading.equalToSuperview().offset(horizontalOffset)
+            make.trailing.equalToSuperview().offset(-horizontalOffset)
+            make.top.equalTo(gameDescriptionValueTextView.snp.bottom).offset(3 * verticalOffset)
+            make.bottom.equalToSuperview().offset(-verticalOffset)
+        }
+        
+        gameChartsView.addSubview(gameRatingLabel)
         gameRatingLabel.snp.makeConstraints { make -> Void in
             make.leading.equalToSuperview().offset(horizontalOffset)
             make.trailing.equalTo(gameDataView.snp.centerX)
-            make.top.equalTo(gameDescriptionValueTextView.snp.bottom).offset(verticalOffset)
+            make.top.equalToSuperview().offset(verticalOffset)
             make.height.equalTo(labelHeight)
         }
         
-        gameDataView.addSubview(gameMetacriticLabel)
+        gameChartsView.addSubview(gameMetacriticLabel)
         gameMetacriticLabel.snp.makeConstraints { make -> Void in
             make.leading.equalTo(gameDataView.snp.centerX)
             make.trailing.equalToSuperview().offset(-horizontalOffset)
-            make.top.equalTo(gameDescriptionValueTextView.snp.bottom).offset(verticalOffset)
+            make.top.equalToSuperview().offset(verticalOffset)
             make.height.equalTo(labelHeight)
         }
         
-        gameDataView.addSubview(gameRatingDonutChartHostingController.view)
+        gameChartsView.addSubview(gameRatingDonutChartHostingController.view)
         gameRatingDonutChartHostingController.view.snp.makeConstraints { make -> Void in
             make.leading.equalToSuperview().offset(5 * horizontalOffset)
             make.trailing.equalTo(gameDataView.snp.centerX).offset(-5 * horizontalOffset)
@@ -242,7 +259,7 @@ class GameDetailsView: UIView {
             make.bottom.equalToSuperview().offset(-5 * verticalOffset)
         }
         
-        gameDataView.addSubview(gameMetacriticDonutChartHostingController.view)
+        gameChartsView.addSubview(gameMetacriticDonutChartHostingController.view)
         gameMetacriticDonutChartHostingController.view.snp.makeConstraints { make -> Void in
             make.leading.equalTo(gameDataView.snp.centerX).offset(5 * horizontalOffset)
             make.trailing.equalToSuperview().offset(-5 * horizontalOffset)
@@ -250,7 +267,7 @@ class GameDetailsView: UIView {
             make.bottom.equalToSuperview().offset(-5 * verticalOffset)
         }
         
-        gameDataView.addSubview(gameRatingValueLabel)
+        gameChartsView.addSubview(gameRatingValueLabel)
         gameRatingValueLabel.snp.makeConstraints { make -> Void in
             make.centerX.equalTo(gameRatingDonutChartHostingController.view)
             make.centerY.equalTo(gameRatingDonutChartHostingController.view)
@@ -258,7 +275,7 @@ class GameDetailsView: UIView {
             make.height.equalTo(gameRatingDonutChartHostingController.view)
         }
         
-        gameDataView.addSubview(gameMetacriticValueLabel)
+        gameChartsView.addSubview(gameMetacriticValueLabel)
         gameMetacriticValueLabel.snp.makeConstraints { make -> Void in
             make.centerX.equalTo(gameMetacriticDonutChartHostingController.view)
             make.centerY.equalTo(gameMetacriticDonutChartHostingController.view)
