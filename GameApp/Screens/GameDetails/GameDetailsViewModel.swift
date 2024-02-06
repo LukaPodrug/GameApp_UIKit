@@ -10,17 +10,15 @@ import Combine
 
 class GameDetailsViewModel: ObservableObject {
     var cancellables: Set<AnyCancellable>
-    
-    let mainCoordinator: MainCoordinator?
 
     @Published var gameDetails: GameDetailsModel?
+    @Published var gameDetailsAPIError: Bool
     
-    init(mainCoordinator: MainCoordinator?) {
+    init() {
         self.cancellables = Set<AnyCancellable>()
         
-        self.mainCoordinator = mainCoordinator
-        
         self.gameDetails = nil
+        self.gameDetailsAPIError = false
         
         getGameDetails()
     }
@@ -28,6 +26,8 @@ class GameDetailsViewModel: ObservableObject {
 
 extension GameDetailsViewModel {
     func getGameDetails() {
+        gameDetailsAPIError = false
+        
         APIManager.shared.getGameDetails()
             .receive(on: DispatchQueue.main)
             .sink { completion in
@@ -45,7 +45,7 @@ extension GameDetailsViewModel {
     }
     
     func handleGetGameDetailsFailure(message: String) {
-        mainCoordinator?.presentGetGameDetailsFailure()
+        gameDetailsAPIError = true
     }
     
     func handleGetGameDetailsSuccess(gameDetails: GameDetailsModel) {
@@ -62,6 +62,14 @@ extension GameDetailsViewModel {
                 }
                 
                 return true
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var presentGameDetailsAPIErrorModal: AnyPublisher<Bool, Never> {
+        return $gameDetailsAPIError.didSet
+            .map { gameDetailsAPIError in
+                return gameDetailsAPIError
             }
             .eraseToAnyPublisher()
     }

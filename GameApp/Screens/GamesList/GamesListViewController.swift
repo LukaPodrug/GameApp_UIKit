@@ -57,10 +57,8 @@ class GamesListViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Genres", style: .plain, target: self, action: #selector(genresButtonTapped))
         
         let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-        activityIndicatorView.hidesWhenStopped = true
-        activityIndicatorView.startAnimating()
-        
-        gamesListView.gamesTableView.backgroundView = activityIndicatorView
+        activityIndicatorView.backgroundColor = .systemGray5
+        activityIndicatorView.layer.zPosition = 1
         
         UserDefaults.standard
             .publisher(for: \.selectedGenresIds)
@@ -70,6 +68,16 @@ class GamesListViewController: UIViewController {
                     return
                 }
                 
+                activityIndicatorView.startAnimating()
+                
+                self.gamesListView.contentView.addSubview(activityIndicatorView)
+                activityIndicatorView.snp.makeConstraints { make -> Void in
+                    make.leading.equalToSuperview()
+                    make.trailing.equalToSuperview()
+                    make.top.equalToSuperview()
+                    make.bottom.equalToSuperview()
+                }
+
                 self.gamesListViewModel.getGames()
             })
             .store(in: &subscriptions)
@@ -77,8 +85,24 @@ class GamesListViewController: UIViewController {
         gamesListViewModel.updateGamesTableView
             .sink { updateGamesTableView in
                 if updateGamesTableView == true {
-                    activityIndicatorView.stopAnimating()
-                    self.gamesListView.gamesTableView.animatedReload()
+                    activityIndicatorView.removeFromSuperview()
+                    self.gamesListView.gamesTableView.reloadData()
+                }
+            }
+            .store(in: &subscriptions)
+        
+        gamesListViewModel.presentGamesAPIErrorModal
+            .sink { presentGamesAPIErrorModal in
+                if presentGamesAPIErrorModal == true {
+                    self.mainCoordinator?.presentGetGamesFailure(handler: self.gamesListViewModel.getGames)
+                }
+            }
+            .store(in: &subscriptions)
+        
+        gamesListViewModel.presentMoreGamesAPIErrorModal
+            .sink { presentMoreGamesAPIErrorModal in
+                if presentMoreGamesAPIErrorModal == true {
+                    self.mainCoordinator?.presentGetGamesFailure(handler: self.gamesListViewModel.getMoreGames)
                 }
             }
             .store(in: &subscriptions)

@@ -19,7 +19,7 @@ class GameDetailsViewController: UIViewController {
     
     init() {
         self.subscriptions = Set<AnyCancellable>()
-        self.gameDetailsViewModel = GameDetailsViewModel(mainCoordinator: mainCoordinator)
+        self.gameDetailsViewModel = GameDetailsViewModel()
         self.gameDetailsListView = GameDetailsView()
         
         super.init(nibName: nil, bundle: nil)
@@ -74,6 +74,14 @@ class GameDetailsViewController: UIViewController {
                 if updateGameDetailsData == true {
                     activityIndicatorView.removeFromSuperview()
                     self.setupUIData()
+                }
+            }
+            .store(in: &subscriptions)
+        
+        gameDetailsViewModel.presentGameDetailsAPIErrorModal
+            .sink { presentGameDetailsAPIErrorModal in
+                if presentGameDetailsAPIErrorModal == true {
+                    self.mainCoordinator?.presentGetGameDetailsFailure(handler: self.gameDetailsViewModel.getGameDetails)
                 }
             }
             .store(in: &subscriptions)

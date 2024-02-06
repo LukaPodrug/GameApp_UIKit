@@ -21,7 +21,7 @@ class GenresListViewController: UIViewController {
     
     init() {
         self.subscriptions = Set<AnyCancellable>()
-        self.genresListViewModel = GenresListViewModel(mainCoordinator: mainCoordinator)
+        self.genresListViewModel = GenresListViewModel()
         self.genresListView = GenresListView()
         
         super.init(nibName: nil, bundle: nil)
@@ -75,7 +75,15 @@ class GenresListViewController: UIViewController {
             .sink { updateGenresTableView in
                 if updateGenresTableView == true {
                     activityIndicatorView.stopAnimating()
-                    self.genresListView.genresTableView.animatedReload()
+                    self.genresListView.genresTableView.reloadData()
+                }
+            }
+            .store(in: &subscriptions)
+        
+        genresListViewModel.presentGenresAPIErrorModal
+            .sink { presentGenresAPIErrorModal in
+                if presentGenresAPIErrorModal == true {
+                    self.mainCoordinator?.presentGetAllGenresFailure(handler: self.genresListViewModel.getAllGenres)
                 }
             }
             .store(in: &subscriptions)

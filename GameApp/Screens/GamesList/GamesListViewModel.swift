@@ -16,6 +16,8 @@ class GamesListViewModel: ObservableObject {
     @Published var games: [GameModel]
     var gamesPage: Int
     var gamesLoadMore: Bool
+    @Published var gamesAPIError: Bool
+    @Published var moreGamesAPIError: Bool
     
     init(mainCoordinator: MainCoordinator?) {
         self.cancellables = Set<AnyCancellable>()
@@ -25,6 +27,8 @@ class GamesListViewModel: ObservableObject {
         self.games = []
         self.gamesPage = 1
         self.gamesLoadMore = false
+        self.gamesAPIError = false
+        self.moreGamesAPIError = false
         
         getGames()
     }
@@ -32,8 +36,9 @@ class GamesListViewModel: ObservableObject {
 
 extension GamesListViewModel {
     func getGames() {
+        gamesAPIError = false
         gamesPage = 1
-        
+
         APIManager.shared.getGames(page: gamesPage)
             .receive(on: DispatchQueue.main)
             .sink { completion in
@@ -55,7 +60,7 @@ extension GamesListViewModel {
     }
     
     func handleGetGamesFailure(message: String) {
-        mainCoordinator?.presentGetGamesFailure()
+        gamesAPIError = true
     }
     
     func handleGetGamesSuccess(games: [GameModel]) {
@@ -63,6 +68,8 @@ extension GamesListViewModel {
     }
     
     func getMoreGames() {
+        moreGamesAPIError = false
+        
         if gamesLoadMore == true {
             APIManager.shared.getGames(page: gamesPage)
                 .receive(on: DispatchQueue.main)
@@ -86,7 +93,7 @@ extension GamesListViewModel {
     }
     
     func handleGetMoreGamesFailure(message: String) {
-        mainCoordinator?.presentGetGamesFailure()
+        moreGamesAPIError = true
     }
     
     func handleGetMoreGamesSuccess(games: [GameModel]) {
@@ -103,6 +110,22 @@ extension GamesListViewModel {
                 }
                 
                 return true
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var presentGamesAPIErrorModal: AnyPublisher<Bool, Never> {
+        return $gamesAPIError.didSet
+            .map { gamesAPIError in
+                return gamesAPIError
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var presentMoreGamesAPIErrorModal: AnyPublisher<Bool, Never> {
+        return $moreGamesAPIError.didSet
+            .map { moreGamesAPIError in
+                return moreGamesAPIError
             }
             .eraseToAnyPublisher()
     }

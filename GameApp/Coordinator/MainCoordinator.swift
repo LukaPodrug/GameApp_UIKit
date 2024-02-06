@@ -39,21 +39,21 @@ class MainCoordinator: Coordinator {
 }
 
 extension MainCoordinator {
-    func presentGetAllGenresFailure() {
+    func presentGetAllGenresFailure(handler: @escaping () -> Void) {
         let alertController: UIAlertController = UIAlertController(title: "Error with fetching genres", message: nil, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in handler() }))
         navigationController.present(alertController, animated: true)
     }
     
-    func presentGetGamesFailure() {
+    func presentGetGamesFailure(handler: @escaping () -> Void) {
         let alertController: UIAlertController = UIAlertController(title: "Error with fetching games", message: nil, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in handler() }))
         navigationController.present(alertController, animated: true)
     }
     
-    func presentGetGameDetailsFailure() {
+    func presentGetGameDetailsFailure(handler: @escaping () -> Void) {
         let alertController: UIAlertController = UIAlertController(title: "Error with fetching game details", message: nil, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in handler() }))
         navigationController.present(alertController, animated: true)
     }
 }
