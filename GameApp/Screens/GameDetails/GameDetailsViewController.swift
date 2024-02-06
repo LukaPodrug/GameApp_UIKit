@@ -93,7 +93,7 @@ class GameDetailsViewController: UIViewController {
     
     func setupUIData() {
         gameDetailsListView.gameNameValueLabel.text = gameDetailsViewModel.gameDetails!.name
-        gameDetailsListView.gameDescriptionValueTextView.text = gameDetailsViewModel.gameDetails!.description_raw
+        gameDetailsListView.gameDescriptionValueTextView.text = gameDetailsViewModel.gameDetails!.descriptionRaw
         
         gameDetailsListView.gameRatingDonutChartHostingController.rootView = DonutChart(statistics: [GameRatingDonutChartModel(title: "Rating", value: gameDetailsViewModel.gameDetails!.rating, color: .blue), GameRatingDonutChartModel(title: "Gap", value: 5 - gameDetailsViewModel.gameDetails!.rating, color: .clear)])
         gameDetailsListView.gameMetacriticDonutChartHostingController.rootView = DonutChart(statistics: [GameRatingDonutChartModel(title: "Rating", value: gameDetailsViewModel.gameDetails!.metacritic, color: .blue), GameRatingDonutChartModel(title: "Gap", value: 100 - gameDetailsViewModel.gameDetails!.metacritic, color: .clear)])
@@ -101,7 +101,7 @@ class GameDetailsViewController: UIViewController {
         gameDetailsListView.gameRatingValueLabel.text = String(format: "%.1f", gameDetailsViewModel.gameDetails!.rating / 5 * 100) + "%"
         gameDetailsListView.gameMetacriticValueLabel.text = String(format: "%.1f", gameDetailsViewModel.gameDetails!.metacritic / 100 * 100) + "%"
         
-        guard let imageURL = URL(string: gameDetailsViewModel.gameDetails!.background_image) else {
+        guard let imageURL = URL(string: gameDetailsViewModel.gameDetails!.backgroundImage) else {
             gameDetailsListView.gameImageView.image = UIImage(systemName: "photo")
             return
         }

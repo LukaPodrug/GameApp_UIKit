@@ -18,8 +18,13 @@ struct GameModel: Decodable {
     let id: Int
     let name: String
     let rating: Float
-    let background_image: String
+    let backgroundImage: String
     let genres: [GameGenreModel]
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, rating, genres
+        case backgroundImage = "background_image"
+   }
 }
 
 struct GameGenreModel: Decodable {

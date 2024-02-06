@@ -146,7 +146,7 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
 
         cell.gameRatingLabel.text = String(format: "%.1f", gamesListViewModel.games[indexPath.row].rating / 5 * 100) + "%"
         
-        guard let imageURL = URL(string: gamesListViewModel.games[indexPath.row].background_image) else {
+        guard let imageURL = URL(string: gamesListViewModel.games[indexPath.row].backgroundImage) else {
             cell.gameImageView.image = UIImage(systemName: "photo")
             return cell
         }

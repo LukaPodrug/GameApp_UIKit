@@ -12,6 +12,12 @@ struct GameDetailsModel: Decodable {
     let name: String
     let rating: Float
     let metacritic: Float
-    let background_image: String
-    let description_raw: String
+    let backgroundImage: String
+    let descriptionRaw: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, rating, metacritic
+        case backgroundImage = "background_image"
+        case descriptionRaw = "description_raw"
+   }
 }

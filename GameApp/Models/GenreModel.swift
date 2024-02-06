@@ -16,5 +16,10 @@ struct GenresResponseModel: Decodable {
 struct GenreModel: Decodable {
     let id: Int
     let name: String
-    let image_background: String
+    let backgroundImage: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name
+        case backgroundImage = "image_background"
+   }
 }

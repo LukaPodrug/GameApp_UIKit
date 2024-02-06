@@ -122,7 +122,7 @@ extension GenresListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.genreLikeSwitch.tag = genresListViewModel.genres[indexPath.row].id
         cell.genreLikeSwitch.addTarget(self, action: #selector(genreTableCellSwitchTapped(sender:)), for: .valueChanged)
         
-        guard let imageURL = URL(string: genresListViewModel.genres[indexPath.row].image_background) else {
+        guard let imageURL = URL(string: genresListViewModel.genres[indexPath.row].backgroundImage) else {
             cell.genreImageView.image = UIImage(systemName: "photo")
             return cell
         }
