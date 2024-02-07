@@ -31,7 +31,7 @@ class GenresListViewModel: ObservableObject {
 
 extension GenresListViewModel {
     func getAllGenres() {
-        APIManager.shared.getAllGenres()
+        APIManager.shared.getGenres()
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {

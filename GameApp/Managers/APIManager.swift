@@ -38,7 +38,7 @@ class APIManager {
     
     var cancellables = Set<AnyCancellable>()
     
-    func getAllGenres() -> Future<GenresResponseModel, Error> {
+    func getGenres() -> Future<GenresResponseModel, Error> {
         let fullAPIURL: String = baseAPIURL + "/genres" + "?" + "key=\(APIKey)"
         
         return Future<GenresResponseModel, Error> { promise in
@@ -89,7 +89,7 @@ class APIManager {
         }
     }
     
-    func getGames(page: Int) -> Future<GamesResponseModel, Error> {
+    func getGamesBySelectedGenresIdsAndPage(page: Int) -> Future<GamesResponseModel, Error> {
         let fullAPIURL: String = baseAPIURL + "/games" + "?" + "genres=\(UserDefaults.standard.selectedGenresIds.toString())" + "&" + "page=\(page)" + "&" + "key=\(APIKey)"
         
         return Future<GamesResponseModel, Error> { promise in

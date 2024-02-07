@@ -32,7 +32,7 @@ extension GamesListViewModel {
     func getGames() {
         gamesPage = 1
 
-        APIManager.shared.getGames(page: gamesPage)
+        APIManager.shared.getGamesBySelectedGenresIdsAndPage(page: gamesPage)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {
@@ -54,7 +54,7 @@ extension GamesListViewModel {
     
     func getMoreGames() {
         if gamesLoadMore == true {
-            APIManager.shared.getGames(page: gamesPage)
+            APIManager.shared.getGamesBySelectedGenresIdsAndPage(page: gamesPage)
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
                     switch completion {
