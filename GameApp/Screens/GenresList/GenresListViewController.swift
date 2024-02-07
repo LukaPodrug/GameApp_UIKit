@@ -8,7 +8,6 @@
 import Combine
 import UIKit
 import SnapKit
-import SDWebImage
 
 class GenresListViewController: UIViewController {
     let genreTableCellHeight: CGFloat = 80
@@ -105,27 +104,9 @@ extension GenresListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GenreTableCell", for: indexPath) as! GenreTableViewCell
         
-        cell.genreNameLabel.text = genresListViewModel.genres[indexPath.row].name
-        
-        cell.genreLikeSwitch.tag = genresListViewModel.genres[indexPath.row].id
         cell.genreLikeSwitch.addTarget(self, action: #selector(genreTableCellSwitchTapped(sender:)), for: .valueChanged)
         
-        if genresListViewModel.newSelectedGenresIds.contains(genresListViewModel.genres[indexPath.row].id) {
-            cell.genreLikeSwitch.isOn = true
-        }
-        
-        else {
-            cell.genreLikeSwitch.isOn = false
-        }
-        
-        guard let imageURL = URL(string: genresListViewModel.genres[indexPath.row].backgroundImage) else {
-            cell.genreImageView.image = UIImage(systemName: "photo")
-            return cell
-        }
-        
-        cell.genreImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        cell.genreImageView.sd_imageIndicator?.startAnimatingIndicator()
-        cell.genreImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(systemName: "photo"), options: .continueInBackground, completed: nil)
+        cell.setupUIData(genre: genresListViewModel.genres[indexPath.row], selectedGenresIds: genresListViewModel.newSelectedGenresIds)
         
         return cell
     }

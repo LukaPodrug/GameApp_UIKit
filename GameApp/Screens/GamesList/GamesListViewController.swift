@@ -121,20 +121,7 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.setGenresCollectionViewDataSourceAndDelegate(dataSourceAndDelegate: self, forRow: indexPath.row)
         cell.gameGenresCollectionView.register(GenreCollectionViewCell.self, forCellWithReuseIdentifier: "GenreCollectionCell")
         
-        cell.gameNameLabel.text = gamesListViewModel.games[indexPath.row].name
-        
-        cell.gameRatingDonutChartHostingController.rootView = DonutChart(statistics: [GameRatingDonutChartModel(title: "Rating", value: gamesListViewModel.games[indexPath.row].rating, color: .blue), GameRatingDonutChartModel(title: "Gap", value: 5 - gamesListViewModel.games[indexPath.row].rating, color: .clear)])
-
-        cell.gameRatingLabel.text = String(format: "%.1f", gamesListViewModel.games[indexPath.row].rating / 5 * 100) + "%"
-        
-        guard let imageURL = URL(string: gamesListViewModel.games[indexPath.row].backgroundImage) else {
-            cell.gameImageView.image = UIImage(systemName: "photo")
-            return cell
-        }
-        
-        cell.gameImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        cell.gameImageView.sd_imageIndicator?.startAnimatingIndicator()
-        cell.gameImageView.sd_setImage(with: imageURL, placeholderImage: nil, options: .continueInBackground, completed: nil)
+        cell.setupUIData(game: gamesListViewModel.games[indexPath.row])
         
         return cell
     }
@@ -166,19 +153,9 @@ extension GamesListViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenreCollectionCell", for: indexPath) as! GenreCollectionViewCell
         
-        cell.setupUI()
+        cell.setupUIFunctionality(selected: UserDefaults.standard.selectedGenresIds.contains(gamesListViewModel.games[collectionView.tag].genres[indexPath.row].id))
         
-        cell.genreNameLabel.text = gamesListViewModel.games[collectionView.tag].genres[indexPath.row].name
-        
-        if UserDefaults.standard.selectedGenresIds.contains(gamesListViewModel.games[collectionView.tag].genres[indexPath.row].id) {
-            cell.genreNameLabel.textColor = .white
-            cell.contentView.backgroundColor = .systemBlue
-        }
-        
-        else {
-            cell.genreNameLabel.textColor = .black
-            cell.contentView.backgroundColor = .systemGray2
-        }
+        cell.setupUIData(genre: gamesListViewModel.games[collectionView.tag].genres[indexPath.row])
     
         return cell
     }

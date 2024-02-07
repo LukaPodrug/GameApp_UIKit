@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 import SnapKit
+import SDWebImage
 
 class GameTableViewCell: UITableViewCell {
     let horizontalOffset: CGFloat = 5
@@ -131,6 +132,23 @@ class GameTableViewCell: UITableViewCell {
     
     func setupUIFunctionality() {
         selectionStyle = .none
+    }
+    
+    func setupUIData(game: GameModel) {
+        gameNameLabel.text = game.name
+        
+        gameRatingDonutChartHostingController.rootView = DonutChart(statistics: [GameRatingDonutChartModel(title: "Rating", value: game.rating, color: .blue), GameRatingDonutChartModel(title: "Gap", value: 5 - game.rating, color: .clear)])
+
+        gameRatingLabel.text = String(format: "%.1f", game.rating / 5 * 100) + "%"
+        
+        guard let imageURL = URL(string: game.backgroundImage) else {
+            gameImageView.image = UIImage(systemName: "photo")
+            return
+        }
+        
+        gameImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        gameImageView.sd_imageIndicator?.startAnimatingIndicator()
+        gameImageView.sd_setImage(with: imageURL, placeholderImage: nil, options: .continueInBackground, completed: nil)
     }
 }
 

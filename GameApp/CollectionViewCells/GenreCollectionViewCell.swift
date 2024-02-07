@@ -19,6 +19,16 @@ class GenreCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
     func setupUI() {
         backgroundColor = .clear
         
@@ -31,5 +41,14 @@ class GenreCollectionViewCell: UICollectionViewCell {
             make.top.equalToSuperview().offset(verticalOffset)
             make.bottom.equalToSuperview().offset(-verticalOffset)
         }
+    }
+    
+    func setupUIFunctionality(selected: Bool) {
+        genreNameLabel.textColor = selected ? .white : .black
+        contentView.backgroundColor = selected ? .systemBlue : .systemGray2
+    }
+    
+    func setupUIData(genre: GameGenreModel) {
+        genreNameLabel.text = genre.name
     }
 }

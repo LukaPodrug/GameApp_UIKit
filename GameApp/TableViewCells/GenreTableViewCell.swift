@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 class GenreTableViewCell: UITableViewCell {
     let horizontalOffset: CGFloat = 5
@@ -85,5 +86,21 @@ class GenreTableViewCell: UITableViewCell {
     
     func setupUIFunctionality() {
         selectionStyle = .none
+    }
+    
+    func setupUIData(genre: GenreModel, selectedGenresIds: [Int]) {
+        genreNameLabel.text = genre.name
+        
+        genreLikeSwitch.tag = genre.id
+        genreLikeSwitch.isOn = selectedGenresIds.contains(genre.id)
+        
+        guard let imageURL = URL(string: genre.backgroundImage) else {
+            genreImageView.image = UIImage(systemName: "photo")
+            return
+        }
+        
+        genreImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        genreImageView.sd_imageIndicator?.startAnimatingIndicator()
+        genreImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(systemName: "photo"), options: .continueInBackground, completed: nil)
     }
 }
