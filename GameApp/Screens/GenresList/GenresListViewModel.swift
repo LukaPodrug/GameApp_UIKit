@@ -9,12 +9,13 @@ import Foundation
 import Combine
 
 class GenresListViewModel: ObservableObject {
+    var mainCoordinator: MainCoordinator?
+    
     var cancellables: Set<AnyCancellable>
     
     @Published var oldSelectedGenresIds: [Int]
     @Published var genres: [GenreModel]
     @Published var newSelectedGenresIds: [Int]
-    @Published var genresAPIError: Bool
     
     init() {
         self.cancellables = Set<AnyCancellable>()
@@ -22,7 +23,6 @@ class GenresListViewModel: ObservableObject {
         self.oldSelectedGenresIds = []
         self.genres = []
         self.newSelectedGenresIds = []
-        self.genresAPIError = false
         
         getOldSelectedGenresIds()
         getAllGenres()
@@ -31,30 +31,20 @@ class GenresListViewModel: ObservableObject {
 
 extension GenresListViewModel {
     func getAllGenres() {
-        genresAPIError = false
-        
         APIManager.shared.getAllGenres()
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {
                     case .failure(let error):
-                        self.handleGetAllGenresFailure(message: error.localizedDescription)
+                        self.mainCoordinator?.presentGetAllGenresFailure(handler: self.getAllGenres)
                     default:
                         break
                 }
             }
             receiveValue: { genresResponse in
-                self.handleGetAllGenresSuccess(genres: genresResponse.results)
+                self.genres = genresResponse.results
             }
             .store(in: &cancellables)
-    }
-    
-    func handleGetAllGenresFailure(message: String) {
-        genresAPIError = true
-    }
-    
-    func handleGetAllGenresSuccess(genres: [GenreModel]) {
-        self.genres = genres
     }
 }
 
@@ -110,14 +100,6 @@ extension GenresListViewModel {
                 }
                 
                 return true
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    var presentGenresAPIErrorModal: AnyPublisher<Bool, Never> {
-        return $genresAPIError.didSet
-            .map { genresAPIError in
-                return genresAPIError
             }
             .eraseToAnyPublisher()
     }

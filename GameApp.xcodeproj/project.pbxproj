@@ -33,7 +33,6 @@
 		D1CB398B2B6CE2D5007DA5B7 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB398A2B6CE2D5007DA5B7 /* APIManager.swift */; };
 		D1CB39912B6D5671007DA5B7 /* GenreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39902B6D5671007DA5B7 /* GenreTableViewCell.swift */; };
 		D1CB39932B6D56A8007DA5B7 /* GameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39922B6D56A8007DA5B7 /* GameTableViewCell.swift */; };
-		D1CB39952B6D570B007DA5B7 /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39942B6D570B007DA5B7 /* GenreCollectionViewCell.swift */; };
 		D1CB39992B6E7CBF007DA5B7 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1CB39982B6E7CBF007DA5B7 /* Config.plist */; };
 		D1CB399C2B6E7D5C007DA5B7 /* GenreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB399B2B6E7D5C007DA5B7 /* GenreModel.swift */; };
 		D1CB399F2B70E511007DA5B7 /* Published.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB399E2B70E511007DA5B7 /* Published.swift */; };
@@ -41,6 +40,7 @@
 		D1CB39A32B710805007DA5B7 /* [Int].swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39A22B710805007DA5B7 /* [Int].swift */; };
 		D1CB39A62B7144BD007DA5B7 /* DonutChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39A52B7144BD007DA5B7 /* DonutChart.swift */; };
 		D1CB39A82B722E38007DA5B7 /* GameDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB39A72B722E38007DA5B7 /* GameDetailsModel.swift */; };
+		D1EA6AFC2B7396C60096C7FA /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EA6AFB2B7396C60096C7FA /* GenreCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,7 +68,6 @@
 		D1CB398A2B6CE2D5007DA5B7 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		D1CB39902B6D5671007DA5B7 /* GenreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewCell.swift; sourceTree = "<group>"; };
 		D1CB39922B6D56A8007DA5B7 /* GameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
-		D1CB39942B6D570B007DA5B7 /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1CB39982B6E7CBF007DA5B7 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		D1CB399B2B6E7D5C007DA5B7 /* GenreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreModel.swift; sourceTree = "<group>"; };
 		D1CB399E2B70E511007DA5B7 /* Published.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Published.swift; sourceTree = "<group>"; };
@@ -76,6 +75,7 @@
 		D1CB39A22B710805007DA5B7 /* [Int].swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "[Int].swift"; sourceTree = "<group>"; };
 		D1CB39A52B7144BD007DA5B7 /* DonutChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonutChart.swift; sourceTree = "<group>"; };
 		D1CB39A72B722E38007DA5B7 /* GameDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailsModel.swift; sourceTree = "<group>"; };
+		D1EA6AFB2B7396C60096C7FA /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
 		D5AB04D48FD04ED241B5CA20 /* Pods-GameApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameApp.debug.xcconfig"; path = "Target Support Files/Pods-GameApp/Pods-GameApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,7 +139,7 @@
 				D1CB399A2B6E7D53007DA5B7 /* Models */,
 				D1CB39782B6CE0D1007DA5B7 /* Screens */,
 				D1CB398F2B6D5638007DA5B7 /* TableViewCells */,
-				D1CB398C2B6D55B5007DA5B7 /* CollectionViewCells */,
+				D1EA6AFA2B7396AE0096C7FA /* CollectionViewCells */,
 				D1CB39872B6CE2BD007DA5B7 /* Managers */,
 				D1CB396C2B6C5C5A007DA5B7 /* Coordinator */,
 				D1CB396B2B6C58B1007DA5B7 /* Startup */,
@@ -219,14 +219,6 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		D1CB398C2B6D55B5007DA5B7 /* CollectionViewCells */ = {
-			isa = PBXGroup;
-			children = (
-				D1CB39942B6D570B007DA5B7 /* GenreCollectionViewCell.swift */,
-			);
-			path = CollectionViewCells;
-			sourceTree = "<group>";
-		};
 		D1CB398F2B6D5638007DA5B7 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +253,14 @@
 				D1CB39A52B7144BD007DA5B7 /* DonutChart.swift */,
 			);
 			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		D1EA6AFA2B7396AE0096C7FA /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				D1EA6AFB2B7396C60096C7FA /* GenreCollectionViewCell.swift */,
+			);
+			path = CollectionViewCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -405,8 +405,8 @@
 				D1CB39932B6D56A8007DA5B7 /* GameTableViewCell.swift in Sources */,
 				D1CB39A32B710805007DA5B7 /* [Int].swift in Sources */,
 				D1CB399F2B70E511007DA5B7 /* Published.swift in Sources */,
+				D1EA6AFC2B7396C60096C7FA /* GenreCollectionViewCell.swift in Sources */,
 				D1CB39A62B7144BD007DA5B7 /* DonutChart.swift in Sources */,
-				D1CB39952B6D570B007DA5B7 /* GenreCollectionViewCell.swift in Sources */,
 				D1CB39892B6CE2CC007DA5B7 /* UserDefaultsManager.swift in Sources */,
 				D1CB39732B6C5D5B007DA5B7 /* GamesListViewModel.swift in Sources */,
 				D1CB398B2B6CE2D5007DA5B7 /* APIManager.swift in Sources */,

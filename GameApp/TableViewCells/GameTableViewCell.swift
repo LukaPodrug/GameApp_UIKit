@@ -65,6 +65,17 @@ class GameTableViewCell: UITableViewCell {
         return label
     }()
     
+    override init(style: CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupUI()
+        setupUIFunctionality()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
     func setupUI() {
         backgroundColor = .clear
         
@@ -116,6 +127,10 @@ class GameTableViewCell: UITableViewCell {
             make.width.equalTo(gameRatingDonutChartHostingController.view)
             make.height.equalTo(gameRatingDonutChartHostingController.view)
         }
+    }
+    
+    func setupUIFunctionality() {
+        selectionStyle = .none
     }
 }
 

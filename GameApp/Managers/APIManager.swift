@@ -139,8 +139,8 @@ class APIManager {
         }
     }
     
-    func getGameDetails() -> Future<GameDetailsModel, Error> {
-        let fullAPIURL: String = baseAPIURL + "/games" + "/\(UserDefaults.standard.selectedGameId)" + "?" + "key=\(APIKey)"
+    func getGameDetails(gameId: Int) -> Future<GameDetailsModel, Error> {
+        let fullAPIURL: String = baseAPIURL + "/games" + "/\(gameId)" + "?" + "key=\(APIKey)"
         
         return Future<GameDetailsModel, Error> { promise in
             guard let url = URL(string: fullAPIURL) else {

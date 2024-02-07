@@ -13,16 +13,16 @@ import SDWebImage
 class GenresListViewController: UIViewController {
     let genreTableCellHeight: CGFloat = 80
     
-    var mainCoordinator: MainCoordinator?
-    
-    var subscriptions: Set<AnyCancellable>
     let genresListViewModel: GenresListViewModel
     let genresListView: GenresListView
     
-    init() {
+    var subscriptions: Set<AnyCancellable>
+    
+    init(genresListViewModel: GenresListViewModel, genresListView: GenresListView) {
+        self.genresListViewModel = genresListViewModel
+        self.genresListView = genresListView
+        
         self.subscriptions = Set<AnyCancellable>()
-        self.genresListViewModel = GenresListViewModel()
-        self.genresListView = GenresListView()
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -80,14 +80,6 @@ class GenresListViewController: UIViewController {
             }
             .store(in: &subscriptions)
         
-        genresListViewModel.presentGenresAPIErrorModal
-            .sink { presentGenresAPIErrorModal in
-                if presentGenresAPIErrorModal == true {
-                    self.mainCoordinator?.presentGetAllGenresFailure(handler: self.genresListViewModel.getAllGenres)
-                }
-            }
-            .store(in: &subscriptions)
-        
         genresListView.genresTableView.dataSource = self
         genresListView.genresTableView.delegate = self
         genresListView.genresTableView.register(GenreTableViewCell.self, forCellReuseIdentifier: "GenreTableCell")
@@ -96,12 +88,12 @@ class GenresListViewController: UIViewController {
 
 extension GenresListViewController {
     @objc func backButtonTapped() {
-        mainCoordinator?.popTopViewController()
+        genresListViewModel.mainCoordinator?.popTopViewController()
     }
     
     @objc func confirmButtonTapped() {
         genresListViewModel.updateSelectedGenresIds()
-        mainCoordinator?.popTopViewController()
+        genresListViewModel.mainCoordinator?.popTopViewController()
     }
 }
 
@@ -113,14 +105,18 @@ extension GenresListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GenreTableCell", for: indexPath) as! GenreTableViewCell
         
-        cell.selectionStyle = .none
-        
-        cell.setupUI()
-        
         cell.genreNameLabel.text = genresListViewModel.genres[indexPath.row].name
         
         cell.genreLikeSwitch.tag = genresListViewModel.genres[indexPath.row].id
         cell.genreLikeSwitch.addTarget(self, action: #selector(genreTableCellSwitchTapped(sender:)), for: .valueChanged)
+        
+        if genresListViewModel.newSelectedGenresIds.contains(genresListViewModel.genres[indexPath.row].id) {
+            cell.genreLikeSwitch.isOn = true
+        }
+        
+        else {
+            cell.genreLikeSwitch.isOn = false
+        }
         
         guard let imageURL = URL(string: genresListViewModel.genres[indexPath.row].backgroundImage) else {
             cell.genreImageView.image = UIImage(systemName: "photo")
@@ -136,20 +132,6 @@ extension GenresListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return genreTableCellHeight
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let genreTableCell = cell as? GenreTableViewCell else {
-            return
-        }
-        
-        if genresListViewModel.newSelectedGenresIds.contains(genresListViewModel.genres[indexPath.row].id) {
-            genreTableCell.genreLikeSwitch.isOn = true
-        }
-        
-        else {
-            genreTableCell.genreLikeSwitch.isOn = false
-        }
     }
 }
 

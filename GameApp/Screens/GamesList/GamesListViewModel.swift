@@ -9,26 +9,20 @@ import Foundation
 import Combine
 
 class GamesListViewModel: ObservableObject {
-    var cancellables: Set<AnyCancellable>
+    var mainCoordinator: MainCoordinator?
     
-    let mainCoordinator: MainCoordinator?
+    var cancellables: Set<AnyCancellable>
 
     @Published var games: [GameModel]
     var gamesPage: Int
     var gamesLoadMore: Bool
-    @Published var gamesAPIError: Bool
-    @Published var moreGamesAPIError: Bool
     
-    init(mainCoordinator: MainCoordinator?) {
+    init() {
         self.cancellables = Set<AnyCancellable>()
-        
-        self.mainCoordinator = mainCoordinator
         
         self.games = []
         self.gamesPage = 1
         self.gamesLoadMore = false
-        self.gamesAPIError = false
-        self.moreGamesAPIError = false
         
         getGames()
     }
@@ -36,7 +30,6 @@ class GamesListViewModel: ObservableObject {
 
 extension GamesListViewModel {
     func getGames() {
-        gamesAPIError = false
         gamesPage = 1
 
         APIManager.shared.getGames(page: gamesPage)
@@ -44,13 +37,13 @@ extension GamesListViewModel {
             .sink { completion in
                 switch completion {
                     case .failure(let error):
-                        self.handleGetGamesFailure(message: error.localizedDescription)
+                        self.mainCoordinator?.presentGetGamesFailure(handler: self.getGames)
                     default:
                         break
                 }
             }
             receiveValue: { gamesResponse in
-                self.handleGetGamesSuccess(games: gamesResponse.results)
+                self.games = gamesResponse.results
                 if gamesResponse.next != nil {
                     self.gamesLoadMore = true
                     self.gamesPage = self.gamesPage + 1
@@ -59,30 +52,20 @@ extension GamesListViewModel {
             .store(in: &cancellables)
     }
     
-    func handleGetGamesFailure(message: String) {
-        gamesAPIError = true
-    }
-    
-    func handleGetGamesSuccess(games: [GameModel]) {
-        self.games = games
-    }
-    
     func getMoreGames() {
-        moreGamesAPIError = false
-        
         if gamesLoadMore == true {
             APIManager.shared.getGames(page: gamesPage)
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
                     switch completion {
                         case .failure(let error):
-                            self.handleGetMoreGamesFailure(message: error.localizedDescription)
+                            self.mainCoordinator?.presentGetGamesFailure(handler: self.getMoreGames)
                         default:
                             break
                         }
                 }
                 receiveValue: { gamesResponse in
-                    self.handleGetMoreGamesSuccess(games: gamesResponse.results)
+                    self.games.append(contentsOf: gamesResponse.results)
                     if gamesResponse.next != nil {
                         self.gamesLoadMore = true
                         self.gamesPage = self.gamesPage + 1
@@ -90,14 +73,6 @@ extension GamesListViewModel {
                 }
                 .store(in: &cancellables)
         }
-    }
-    
-    func handleGetMoreGamesFailure(message: String) {
-        moreGamesAPIError = true
-    }
-    
-    func handleGetMoreGamesSuccess(games: [GameModel]) {
-        self.games.append(contentsOf: games)
     }
 }
 
@@ -110,22 +85,6 @@ extension GamesListViewModel {
                 }
                 
                 return true
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    var presentGamesAPIErrorModal: AnyPublisher<Bool, Never> {
-        return $gamesAPIError.didSet
-            .map { gamesAPIError in
-                return gamesAPIError
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    var presentMoreGamesAPIErrorModal: AnyPublisher<Bool, Never> {
-        return $moreGamesAPIError.didSet
-            .map { moreGamesAPIError in
-                return moreGamesAPIError
             }
             .eraseToAnyPublisher()
     }

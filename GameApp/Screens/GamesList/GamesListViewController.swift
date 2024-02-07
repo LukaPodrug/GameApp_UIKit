@@ -13,16 +13,16 @@ import SDWebImage
 class GamesListViewController: UIViewController {
     let gameTableCellHeight: CGFloat = 80
     
-    var mainCoordinator: MainCoordinator?
-    
-    var subscriptions: Set<AnyCancellable>
     let gamesListViewModel: GamesListViewModel
     let gamesListView: GamesListView
     
-    init() {
+    var subscriptions: Set<AnyCancellable>
+    
+    init(gamesListViewModel: GamesListViewModel, gamesListView: GamesListView) {
+        self.gamesListViewModel = gamesListViewModel
+        self.gamesListView = gamesListView
+        
         self.subscriptions = Set<AnyCancellable>()
-        self.gamesListViewModel = GamesListViewModel(mainCoordinator: mainCoordinator)
-        self.gamesListView = GamesListView()
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -92,22 +92,6 @@ class GamesListViewController: UIViewController {
             }
             .store(in: &subscriptions)
         
-        gamesListViewModel.presentGamesAPIErrorModal
-            .sink { presentGamesAPIErrorModal in
-                if presentGamesAPIErrorModal == true {
-                    self.mainCoordinator?.presentGetGamesFailure(handler: self.gamesListViewModel.getGames)
-                }
-            }
-            .store(in: &subscriptions)
-        
-        gamesListViewModel.presentMoreGamesAPIErrorModal
-            .sink { presentMoreGamesAPIErrorModal in
-                if presentMoreGamesAPIErrorModal == true {
-                    self.mainCoordinator?.presentGetGamesFailure(handler: self.gamesListViewModel.getMoreGames)
-                }
-            }
-            .store(in: &subscriptions)
-        
         gamesListView.gamesTableView.dataSource = self
         gamesListView.gamesTableView.delegate = self
         gamesListView.gamesTableView.register(GameTableViewCell.self, forCellReuseIdentifier: "GameTableCell")
@@ -116,13 +100,13 @@ class GamesListViewController: UIViewController {
 
 extension GamesListViewController {
     @objc func genresButtonTapped() {
-        mainCoordinator?.navigateToGenresList()
+        gamesListViewModel.mainCoordinator?.navigateToGenresList()
     }
 }
 
 extension GamesListViewController {
     func navigateToGenresList(initialGenresChoiceMade: Bool) {
-        mainCoordinator?.navigateToGenresList()
+        gamesListViewModel.mainCoordinator?.navigateToGenresList()
     }
 }
 
@@ -134,10 +118,7 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameTableCell", for: indexPath) as! GameTableViewCell
         
-        cell.selectionStyle = .none
-
-        cell.setupUI()
-        
+        cell.setGenresCollectionViewDataSourceAndDelegate(dataSourceAndDelegate: self, forRow: indexPath.row)
         cell.gameGenresCollectionView.register(GenreCollectionViewCell.self, forCellWithReuseIdentifier: "GenreCollectionCell")
         
         cell.gameNameLabel.text = gamesListViewModel.games[indexPath.row].name
@@ -163,12 +144,6 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let gameTableCell = cell as? GameTableViewCell else {
-            return
-        }
-
-        gameTableCell.setGenresCollectionViewDataSourceAndDelegate(dataSourceAndDelegate: self, forRow: indexPath.row)
-        
         if indexPath.row == gamesListViewModel.games.count - 3 {
             gamesListViewModel.getMoreGames()
         }
@@ -179,14 +154,7 @@ extension GamesListViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.onPressAnimation()
         
-        gameTableCellTapped(gameId: gamesListViewModel.games[indexPath.row].id)
-    }
-}
-
-extension GamesListViewController {
-    func gameTableCellTapped(gameId: Int) {
-        UserDefaults.standard.selectedGameId = gameId
-        mainCoordinator?.presentGameDetails()
+        gamesListViewModel.mainCoordinator?.presentGameDetails(gameId: gamesListViewModel.games[indexPath.row].id)
     }
 }
 

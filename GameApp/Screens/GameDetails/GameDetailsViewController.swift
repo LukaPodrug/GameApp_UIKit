@@ -11,16 +11,16 @@ import SnapKit
 import SDWebImage
 
 class GameDetailsViewController: UIViewController {
-    var mainCoordinator: MainCoordinator?
-    
-    var subscriptions: Set<AnyCancellable>
     let gameDetailsViewModel: GameDetailsViewModel
     let gameDetailsListView: GameDetailsView
     
-    init() {
+    var subscriptions: Set<AnyCancellable>
+    
+    init(gameDetailsViewModel: GameDetailsViewModel, gameDetailsView: GameDetailsView) {
+        self.gameDetailsViewModel = gameDetailsViewModel
+        self.gameDetailsListView = gameDetailsView
+        
         self.subscriptions = Set<AnyCancellable>()
-        self.gameDetailsViewModel = GameDetailsViewModel()
-        self.gameDetailsListView = GameDetailsView()
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -63,26 +63,11 @@ class GameDetailsViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
         
-        UserDefaults.standard
-            .publisher(for: \.selectedGameId)
-            .sink(receiveValue: { selectedGameId in
-                self.gameDetailsViewModel.getGameDetails()
-            })
-            .store(in: &subscriptions)
-        
-        gameDetailsViewModel.updateGameDetailsData
-            .sink { updateGameDetailsData in
-                if updateGameDetailsData == true {
+        gameDetailsViewModel.gameDetailsData
+            .sink { gameDetailsData in
+                if let gameDetails = gameDetailsData {
                     activityIndicatorView.removeFromSuperview()
-                    self.setupUIData()
-                }
-            }
-            .store(in: &subscriptions)
-        
-        gameDetailsViewModel.presentGameDetailsAPIErrorModal
-            .sink { presentGameDetailsAPIErrorModal in
-                if presentGameDetailsAPIErrorModal == true {
-                    self.mainCoordinator?.presentGetGameDetailsFailure(handler: self.gameDetailsViewModel.getGameDetails)
+                    self.setupUIData(gameDetails: gameDetails)
                 }
             }
             .store(in: &subscriptions)
@@ -91,17 +76,17 @@ class GameDetailsViewController: UIViewController {
         gameDetailsListView.gameImageView.sd_imageIndicator?.startAnimatingIndicator()
     }
     
-    func setupUIData() {
-        gameDetailsListView.gameNameValueLabel.text = gameDetailsViewModel.gameDetails!.name
-        gameDetailsListView.gameDescriptionValueTextView.text = gameDetailsViewModel.gameDetails!.descriptionRaw
+    func setupUIData(gameDetails: GameDetailsModel) {
+        gameDetailsListView.gameNameValueLabel.text = gameDetails.name
+        gameDetailsListView.gameDescriptionValueTextView.text = gameDetails.descriptionRaw
         
-        gameDetailsListView.gameRatingDonutChartHostingController.rootView = DonutChart(statistics: [GameRatingDonutChartModel(title: "Rating", value: gameDetailsViewModel.gameDetails!.rating, color: .blue), GameRatingDonutChartModel(title: "Gap", value: 5 - gameDetailsViewModel.gameDetails!.rating, color: .clear)])
-        gameDetailsListView.gameMetacriticDonutChartHostingController.rootView = DonutChart(statistics: [GameRatingDonutChartModel(title: "Rating", value: gameDetailsViewModel.gameDetails!.metacritic, color: .blue), GameRatingDonutChartModel(title: "Gap", value: 100 - gameDetailsViewModel.gameDetails!.metacritic, color: .clear)])
+        gameDetailsListView.gameRatingDonutChartHostingController.rootView = DonutChart(statistics: [GameRatingDonutChartModel(title: "Rating", value: gameDetails.rating, color: .blue), GameRatingDonutChartModel(title: "Gap", value: 5 - gameDetails.rating, color: .clear)])
+        gameDetailsListView.gameMetacriticDonutChartHostingController.rootView = DonutChart(statistics: [GameRatingDonutChartModel(title: "Metacritic", value: gameDetails.metacritic, color: .blue), GameRatingDonutChartModel(title: "Gap", value: 100 - gameDetails.metacritic, color: .clear)])
         
-        gameDetailsListView.gameRatingValueLabel.text = String(format: "%.1f", gameDetailsViewModel.gameDetails!.rating / 5 * 100) + "%"
-        gameDetailsListView.gameMetacriticValueLabel.text = String(format: "%.1f", gameDetailsViewModel.gameDetails!.metacritic / 100 * 100) + "%"
+        gameDetailsListView.gameRatingValueLabel.text = String(format: "%.1f", gameDetails.rating / 5 * 100) + "%"
+        gameDetailsListView.gameMetacriticValueLabel.text = String(format: "%.1f", gameDetails.metacritic / 100 * 100) + "%"
         
-        guard let imageURL = URL(string: gameDetailsViewModel.gameDetails!.backgroundImage) else {
+        guard let imageURL = URL(string: gameDetails.backgroundImage) else {
             gameDetailsListView.gameImageView.image = UIImage(systemName: "photo")
             return
         }

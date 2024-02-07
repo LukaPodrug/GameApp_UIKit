@@ -37,6 +37,17 @@ class GenreTableViewCell: UITableViewCell {
         return breaker
     }()
     
+    override init(style: CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupUI()
+        setupUIFunctionality()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
     func setupUI() {
         backgroundColor = .clear
         
@@ -70,5 +81,9 @@ class GenreTableViewCell: UITableViewCell {
             make.top.equalToSuperview().offset(verticalOffset)
             make.bottom.equalToSuperview().offset(-verticalOffset)
         }
+    }
+    
+    func setupUIFunctionality() {
+        selectionStyle = .none
     }
 }
